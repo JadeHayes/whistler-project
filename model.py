@@ -15,10 +15,11 @@ class Skirun(db.Model):
     skirun_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     lift_id = db.Column(db.Integer, db.ForeignKey('lifts.lift_id'))
     category_id = db.Column(db.Integer, db.ForeignKey('categories.category_id'))
-    level_id = db.Column(db.Integer, db.ForeignKey('levels.level_id'))
+    # level_id = db.Column(db.Integer, db.ForeignKey('levels.level_id'))
     groomed = db.Column(db.Boolean)
     status = db.Column(db.Boolean)
     name = db.Column(db.String(200))
+    level = db.Column(db.String(200))
     # min_snow = db.Column(db.Integer, nullable=True)
     # max_snow = db.Column(db.Integer, nullable=True)
 
@@ -29,7 +30,7 @@ class Skirun(db.Model):
     category = db.relationship("Category")
 
     # Defining the relationship between the skirun class and the level table
-    level = db.relationship("Level")
+    # level = db.relationship("Level")
 
     def __repr__(self):
         """ Provide helpful information about each skirun"""
@@ -81,26 +82,26 @@ class LoadingPt(db.Model):
         return "<location={} loading_pt_id={}>".format(self.location, self.loading_pt_id)
 
 
-class Level(db.Model):
-    """information about the differnt levels of difficulty """
+# class Level(db.Model):
+#     """information about the differnt levels of difficulty """
 
-    # Lets SQL alchemy know there is a table named 'levels'
-    __tablename__ = "levels"
+#     # Lets SQL alchemy know there is a table named 'levels'
+#     __tablename__ = "levels"
 
-    # Lets SQL alchemy know which columns to add
-    level_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    level = db.Column(db.String(150))
+#     # Lets SQL alchemy know which columns to add
+#     level_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+#     level = db.Column(db.String(150))
 
-    # Defining the relationship between the skirun class and the level table
-    skiruns = db.relationship("Skirun")
+#     # Defining the relationship between the skirun class and the level table
+#     skiruns = db.relationship("Skirun")
 
-    # Defining the relationship between the lift class and the level table
-    lifts = db.relationship("Lift", secondary="skiruns")
+#     # Defining the relationship between the lift class and the level table
+    # lifts = db.relationship("Lift", secondary="skiruns")
 
-    def __repr__(self):
-        """ Provide helpful information about each level of difficulty"""
+#     def __repr__(self):
+#         """ Provide helpful information about each level of difficulty"""
 
-        return "<level={} level_id={}>".format(self.lift_id, self.level)
+#         return "<level={} level_id={}>".format(self.lift_id, self.level)
 
 
 class Category(db.Model):
