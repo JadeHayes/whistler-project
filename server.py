@@ -6,7 +6,7 @@ from flask import (Flask, render_template, redirect, request, flash,
                    session)
 from flask_debugtoolbar import DebugToolbarExtension
 
-from model import connect_to_db, db, Loading_pts, Category, Level, Lift, Skirun
+from model import connect_to_db, db, LoadingPt, Category, Level, Lift, Skirun
 
 
 app = Flask(__name__)
@@ -24,6 +24,12 @@ app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 ##############################################################################
 # App routes for project
 
+
+@app.route('/')
+def index():
+    """Homepage."""
+
+    return render_template("homepage.html")
 
 
 
