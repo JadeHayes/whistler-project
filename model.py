@@ -13,7 +13,7 @@ class Skirun(db.Model):
 
     # Lets SQL alchemy know which columns to add
     skirun_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    lift_id = db.Column(db.Integer, db.ForeignKey('lifts.lift_id'))
+    # lift_id = db.Column(db.Integer, db.ForeignKey('lifts.lift_id'))
     category_id = db.Column(db.Integer, db.ForeignKey('categories.category_id'))
     # level_id = db.Column(db.Integer, db.ForeignKey('levels.level_id'))
     groomed = db.Column(db.Boolean)
@@ -24,7 +24,7 @@ class Skirun(db.Model):
     # max_snow = db.Column(db.Integer, nullable=True)
 
    # Defining the relationship between the skirun class and the lift table
-    lift = db.relationship("Lift")
+    lifts = db.relationship("Lift", secondary="skiruns_lifts")
 
    # Defining the relationship between the skirun class and the category table
     category = db.relationship("Category")
@@ -51,15 +51,16 @@ class Lift(db.Model):
     loading_pt_id = db.Column(db.Integer, db.ForeignKey('loading_pts.loading_pt_id'), nullable=True)
 
    # Defining the realtionship between the lift class and the skirun table
-    skiruns = db.relationship("Skirun")
+    skiruns = db.relationship("Skirun", secondary="skiruns_lifts")
 
     # Defining the relationship between the lift class and the loading table
-    # loading_pt = db.relationship("LoadingPt")
+    loading_pt = db.relationship("LoadingPt")
 
     def __repr__(self):
         """ Provide helpful information about each lift"""
 
         return "<name={} lift_id={}>".format(self.name, self.lift_id)
+
 
 class LoadingPt(db.Model):
     """information about the differnt loading points on the mountain """
@@ -73,13 +74,30 @@ class LoadingPt(db.Model):
     # Defining the relationship between the lift class and the loading_pts table
     lifts = db.relationship("Lift")
 
-    # Connect to skiruns through lifts
-    skiruns = db.relationship("Skirun", secondary="lifts")
+    # Connect to skiruns through lifts FIXME
+    skiruns = db.relationship("Skirun",
+                           primaryjoin='LoadingPt.loading_pt_id == Lift.loading_pt_id',
+                           secondary='join(Lift, SkirunLift, Lift.lift_id == SkirunLift.lift_id)',
+                           secondaryjoin='SkirunLift.skirun_id == Skirun.skirun_id',
+                           viewonly=True,
+                           backref=db.backref("loading_pts"))
 
     def __repr__(self):
         """ Provide helpful information about each loading location"""
 
         return "<location={} loading_pt_id={}>".format(self.location, self.loading_pt_id)
+
+
+class SkirunLift(db.Model):
+    __tablename__ = 'skiruns_lifts'
+
+    skirun_lift_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    lift_id = db.Column(db.Integer,
+                        db.ForeignKey('lifts.lift_id'),
+                        nullable=False)
+    skirun_id = db.Column(db.Integer,
+                          db.ForeignKey('skiruns.skirun_id'),
+                          nullable=False)
 
 
 # class Level(db.Model):
@@ -120,7 +138,7 @@ class Category(db.Model):
     def __repr__(self):
         """ Provide helpful information about each category"""
 
-        return "<category={} cat_id={}>".format(self.cat, self.cat_id)
+        return "<category={} cat_id={}>".format(self.cat, self.category_id)
 
 
 
