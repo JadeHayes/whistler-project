@@ -97,7 +97,6 @@ class WhistlerSpider(scrapy.Spider):
             # add category to each run
             skiruns = Skirun.query.all() # *** UnicodeEncodeError: 'ascii' codec can't encode character u'\u2013' in position 14: ordinal not in range(128)
             categories = {category.cat: category for category in Category.query.all()}  #*** AttributeError: 'Category' object has no attribute 'cat_id'
-            import pdb; pdb.set_trace()
 
             for skirun in skiruns:
                 parks = ["18' Half Pipe", 'Habitat Terrain Park',
