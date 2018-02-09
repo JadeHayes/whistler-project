@@ -2,7 +2,7 @@ import scrapy
 from scrapy.selector import Selector
 import requests
 import json
-from model import db, connect_to_db, Skirun, Lift, Category, LoadingPt, SkirunLift
+from model import db, connect_to_db, Skirun, Lift, Category, SkirunLift
 from flask import Flask
 import os
 

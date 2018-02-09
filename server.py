@@ -6,7 +6,7 @@ from flask import (Flask, render_template, redirect, request, flash,
                    session)
 from flask_debugtoolbar import DebugToolbarExtension
 
-from model import connect_to_db, db, LoadingPt, Category, Weather, Lift, Skirun
+from model import connect_to_db, db, Category, Weather, Lift, Skirun
 from random import sample
 
 app = Flask(__name__)
@@ -24,8 +24,35 @@ app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 ##############################################################################
 # App routes for project
 
-
 @app.route('/')
+def login():
+    """Log-in"""
+    return render_template("login.html")
+
+
+@app.route('/', methods=['POST'])
+def check_login():
+    """Checks user login information against the db"""
+    # if username & pword match
+        # Return reditect to home
+    # else
+        # flash message (incorrect information)
+    pass
+
+
+@app.route('/register')
+def register():
+    """renders registration template"""
+    return render_template("register.html")
+
+
+@app.route('/register', methods=['POST'])
+def add_info():
+    """Saves users registration information in the db"""
+    return render_template("register.html")
+
+
+@app.route('/home')
 def index():
     """Homepage."""
     weather_obj = Weather.query.all()
@@ -51,7 +78,9 @@ def index():
     # Can do .limit(3)
     run_objs = Skirun.query.filter(Skirun.category_id == cat_id).all()
     # Query for a list of all of the runs that are groomed groomers, choose 3 random
-    groomers = Skirun.query.filter(Skirun.category_id == 2 and Skirun.groomed == True).all()
+
+    # Creating a list of groomers whose id matches the choosen idfor the day, are groomed and are open.
+    groomers = Skirun.query.filter(Skirun.category_id == 2 and Skirun.groomed == True and Skirun.status == True).all()
     groomed_runs = sample(groomers,  3)
 
     return render_template("homepage.html", weather_obj=weather_obj,
