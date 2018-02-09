@@ -4,6 +4,10 @@ db = SQLAlchemy()
 ################################################################################
 # Defining our db
 
+# given a skirun, we can get skirun.lifts (this is because we call it lifts on the Skirun object)
+# from skirun.lifts, then we have list of all lifts
+# iterate through skirun.lifts, for each lift, you can do lift.loading_pt.location (loading_pt is from definition on Lift object)
+
 
 class Skirun(db.Model):
     """information about each ski run"""
@@ -48,6 +52,7 @@ class Lift(db.Model):
     lift_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     name = db.Column(db.String(150))
     status = db.Column(db.String(150))
+    mountain = db.Column(db.String(200))
     loading_pt_id = db.Column(db.Integer, db.ForeignKey('loading_pts.loading_pt_id'), nullable=True)
 
    # Defining the realtionship between the lift class and the skirun table
@@ -70,6 +75,7 @@ class LoadingPt(db.Model):
     # Lets SQL alchemy know which columns to add
     loading_pt_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     location = db.Column(db.String(150))
+    # description
 
     # Defining the relationship between the lift class and the loading_pts table
     lifts = db.relationship("Lift")
@@ -141,19 +147,19 @@ class Category(db.Model):
         return "<category={} cat_id={}>".format(self.cat, self.category_id)
 
 
-
 class Weather(db.Model):
     """information about weather on Blackcomb & Whistler mountain """
     def __repr__(self):
         """ Provide helpful information about each loading location"""
 
-        return "<location={} newsnow={}>".format(self.location, self.new_snow)
+        return "<dailysnow={} snowforcast={}>".format(self.daily_snowfall, self.snow_forcast)
 
     # Lets SQL alchemy know which columns to add
     weather_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    location = db.Column(db.String(150))
-    wind = db.Column(db.String(150))
-    new_snow = db.Column(db.Integer)
+    daily_snowfall = db.Column(db.Integer)
+    overnight_snowfall = db.Column(db.String(150))
+    forcast_icon = db.Column(db.String(150))
+    wind_forcast = db.Column(db.String(150))
     snow_forcast = db.Column(db.String(150))
 
 ##############################################################################
