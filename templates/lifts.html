@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+<script src="http://d3js.org/d3.v3.min.js"><script>
+
+
+
+{% block content %} 
+
+{% for lift in lifts %}
+     <p> {{ lift.name }} </p>
+{% endfor %}
+
+<script> 
+    d3.select("p");
+</script>
+
+
+
+{% endblock %}
