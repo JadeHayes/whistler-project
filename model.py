@@ -62,33 +62,6 @@ class Lift(db.Model):
         return "<name={} lift_id={}>".format(self.name, self.lift_id)
 
 
-# class LoadingPt(db.Model):
-#     """information about the differnt loading points on the mountain """
-#     # Lets SQL alchemy know there is a table named 'levels'
-#     __tablename__ = "loading_pts"
-
-#     # Lets SQL alchemy know which columns to add
-#     loading_pt_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-#     location = db.Column(db.String(150))
-#     # description
-
-#     # Defining the relationship between the lift class and the loading_pts table
-#     lifts = db.relationship("Lift")
-
-#     # Connect to skiruns through lifts FIXME
-#     skiruns = db.relationship("Skirun",
-#                            primaryjoin='LoadingPt.loading_pt_id == Lift.loading_pt_id',
-#                            secondary='join(Lift, SkirunLift, Lift.lift_id == SkirunLift.lift_id)',
-#                            secondaryjoin='SkirunLift.skirun_id == Skirun.skirun_id',
-#                            viewonly=True,
-#                            backref=db.backref("loading_pts"))
-
-#     def __repr__(self):
-#         """ Provide helpful information about each loading location"""
-
-#         return "<location={} loading_pt_id={}>".format(self.location, self.loading_pt_id)
-
-
 class SkirunLift(db.Model):
     __tablename__ = 'skiruns_lifts'
 
@@ -99,7 +72,6 @@ class SkirunLift(db.Model):
     skirun_id = db.Column(db.Integer,
                           db.ForeignKey('skiruns.skirun_id'),
                           nullable=False)
-
 
 
 class Category(db.Model):
@@ -135,6 +107,61 @@ class Weather(db.Model):
     forcast_icon = db.Column(db.String(150))
     wind_forcast = db.Column(db.String(150))
     snow_forcast = db.Column(db.String(150))
+
+
+class User(db.Model):
+    """User of ratings website."""
+    def __repr__(self):
+        """ Provide helpful information about this class"""
+
+        return "<User user_id={} email={}>".format(self.user_id, self.email)
+
+    # Lets SQL alchemy know there is a table named 'Users'
+    __tablename__ = "users"
+
+    #Creating the table
+    # Lets SQL alchemy know this is an integer primary key that auto increments
+    user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    fname = db.Column(db.String(200))
+    lname = db.Column(db.String(200))
+    email = db.Column(db.String(200))
+    zipcode = db.Column(db.String(200))
+    password = db.Column(db.String(64), nullable=True)
+
+
+class Rating(db.Model):
+    """Ratings information for each skirun"""
+
+    def __repr__(self):
+        """ Provide helpful information about this class"""
+
+        return "<User rating_id={} for skirun_id={}>".format(self.rating_id, self.skirun_id)
+
+    # Lets SQL alchemy know there is a table named 'Ratings'
+    __tablename__ = "ratings"
+
+    #Creating the table
+    # Lets SQL alchemy know this is an integer primary key that auto increments
+    rating_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    rating = db.Column(db.Integer, nullable=False)
+    comment = db.Column(db.String(250))
+    # define skirun relationship to ratings through skirun id
+    skirun_id = db.Column(db.Integer,
+                          db.ForeignKey('skiruns.skirun_id'),
+                          nullable=False)
+
+    #Define user_id as a FK to the users table passed in as "table.column_name"
+    user_id = db.Column(db.Integer,
+                        db.ForeignKey('users.user_id'),
+                        nullable=False)
+
+    # Defining the relationship between the user class and the ratings table
+    user = db.relationship("User",
+                           backref=db.backref("ratings"))
+
+    # Defining a relationship to the Skirun class from the ratings table
+    skirun = db.relationship("Skirun",
+                             backref=db.backref("ratings"))
 
 ##############################################################################
 # Helper functions

@@ -1,4 +1,4 @@
-"""Movie Ratings."""
+"""WhistlerMTN"""
 
 from jinja2 import StrictUndefined
 
@@ -6,7 +6,7 @@ from flask import (Flask, render_template, redirect, request, flash,
                    session)
 from flask_debugtoolbar import DebugToolbarExtension
 
-from model import connect_to_db, db, Category, Weather, Lift, Skirun
+from model import connect_to_db, db, Category, Weather, Lift, Skirun, User, Rating
 from random import sample
 
 app = Flask(__name__)
@@ -24,32 +24,52 @@ app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 ##############################################################################
 # App routes for project
 
+
 @app.route('/')
 def login():
     """Log-in"""
     return render_template("login.html")
 
 
-@app.route('/', methods=['POST'])
+@app.route('/login', methods=['POST'])
 def check_login():
     """Checks user login information against the db"""
-    # if username & pword match
-        # Return reditect to home
-    # else
-        # flash message (incorrect information)
-    pass
+    #Get POST request information from the /login page
+    email = request.form.get('email')
+    password = request.form.get('password')
+
+    # Make a query to see if the users email and password are in the db
+    # user = User.query.filter_by(email=email, password=password).first()
+
+    # If they are in the db, add them to a session and redirect home
+    if user:
+        session['logged_in'] = user.user_id
+        flash("Welcome back friend")
+        return redirect("/")
+    # If they are not, flash a message and redirect to login
+    flash("Incorrect information")
+    return redirect("/login")
 
 
 @app.route('/register')
 def register():
     """renders registration template"""
-    return render_template("register.html")
+    return render_template("registration.html")
 
 
 @app.route('/register', methods=['POST'])
 def add_info():
     """Saves users registration information in the db"""
-    return render_template("register.html")
+    # FIXME!!
+
+    return redirect("/home")
+
+
+@app.route('/lifts')
+def show_lifts():
+    """Shows lifts"""
+    lifts = Lift.query.all()
+    return render_template("lifts.html", lifts=lifts)
 
 
 @app.route('/home')
