@@ -2,10 +2,23 @@
 {% block content %} 
 <h3> Registration </h3>
 <div id="registration">
-<form action='/registration' method='POST'>
-    email: <input type='email' name='email'>
-    password: <input type='password' name='password'>
-    zip code: <input type="text" pattern="[0-9]{5}" title="Five digit zip code" />    
+<form action='/register' method='POST'>
+    <p> First name: <input type='text' name='fname' required> </p>
+    <p> Last name:  <input type='text' name='lname' required> </p><br>
+    <p> email: <input type='email' name='email' required></p>
+    <p> password: <input type='password' name='password' required></p>
+    <p> zip code: <input type="text" pattern="[0-9]{5}" title="Five digit zip code" /></p>
+
+        <p> Which level skiruns do you prefer? </p>
+        <p> Where do you like to ride most? </p>
+        <input id="groomers" type="checkbox" name="subscribe" value="groomed">    <label for="groomers">Freshly Groomed Runs</label>
+        <input id="trees" type="checkbox">
+            <label for="trees">Powdery Trees</label>
+        <input id="bowls" type="checkbox"> 
+            <label for="bowls">Open Bowls</label>
+        <input id="park" type="checkbox"> 
+            <label for="park">Park Riding</label>
+
     <input type='submit' value='go!'>
 </form>
 <div>

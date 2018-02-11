@@ -16,11 +16,6 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-<ul>
-  {% for message in get_flashed_messages() %}
-    <li>{{ message }}</li>
-  {% endfor %}
-</ul>
   <title>Whistler</title>
  </head>
 <body>
@@ -48,7 +43,11 @@
     </div>
 </nav>
 
-
+<ul>
+  {% for message in get_flashed_messages() %}
+    <li>{{ message }}</li>
+  {% endfor %}
+</ul>
 
 
 

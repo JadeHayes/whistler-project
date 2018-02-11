@@ -87,34 +87,17 @@ class Category(db.Model):
     # Defining the relationship between the skirun class and the category table
     skiruns = db.relationship("Skirun")
 
+    # Defining the relationship between the user class and the category table
+    users = db.relationship("User")
+
     def __repr__(self):
         """ Provide helpful information about each category"""
 
         return "<category={} cat_id={}>".format(self.cat, self.category_id)
 
 
-class Weather(db.Model):
-    """information about weather on Blackcomb & Whistler mountain """
-    def __repr__(self):
-        """ Provide helpful information about each loading location"""
-
-        return "<dailysnow={} snowforcast={}>".format(self.daily_snowfall, self.snow_forcast)
-
-    # Lets SQL alchemy know which columns to add
-    weather_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    daily_snowfall = db.Column(db.Integer)
-    overnight_snowfall = db.Column(db.String(150))
-    forcast_icon = db.Column(db.String(150))
-    wind_forcast = db.Column(db.String(150))
-    snow_forcast = db.Column(db.String(150))
-
-
 class User(db.Model):
-    """User of ratings website."""
-    def __repr__(self):
-        """ Provide helpful information about this class"""
-
-        return "<User user_id={} email={}>".format(self.user_id, self.email)
+    """User of WhistlerMTN."""
 
     # Lets SQL alchemy know there is a table named 'Users'
     __tablename__ = "users"
@@ -122,20 +105,50 @@ class User(db.Model):
     #Creating the table
     # Lets SQL alchemy know this is an integer primary key that auto increments
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    fname = db.Column(db.String(200))
-    lname = db.Column(db.String(200))
-    email = db.Column(db.String(200))
+    fname = db.Column(db.String(200), nullable=False)
+    lname = db.Column(db.String(200), nullable=False)
+    email = db.Column(db.String(200), nullable=False)
     zipcode = db.Column(db.String(200))
     password = db.Column(db.String(64), nullable=True)
+    category_id = db.Column(db.Integer,
+                            db.ForeignKey('categories.category_id'))
+    level_id = db.Column(db.Integer,
+                         db.ForeignKey('skill_levels.level_id'))
 
+    # Defining the relationship between the skilllevel class and the category table
+    skills = db.relationship("SkillLevel")
 
-class Rating(db.Model):
-    """Ratings information for each skirun"""
+    # Defining the relationship between the user class and the category table
+    categories = db.relationship("Category")
 
     def __repr__(self):
         """ Provide helpful information about this class"""
 
-        return "<User rating_id={} for skirun_id={}>".format(self.rating_id, self.skirun_id)
+        return "<User user_id={} email={}>".format(self.user_id, self.email)
+
+
+class SkillLevel(db.Model):
+    """Green, Blue, Black"""
+
+    # Lets SQL alchemy know there is a table named 'Users'
+    __tablename__ = "skill_levels"
+
+    #Creating the table
+    # Lets SQL alchemy know this is an integer primary key that auto increments
+    level_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    level = db.Column(db.String(20), nullable=False)
+
+    # Defining the relationship between the user class and the skilllevel table
+    users = db.relationship("User")
+
+    def __repr__(self):
+        """ Provide helpful information about this class"""
+
+        return "<ID: skill_id={} level={}>".format(self.level_id, self.level)
+
+
+class Rating(db.Model):
+    """Ratings information for each skirun"""
 
     # Lets SQL alchemy know there is a table named 'Ratings'
     __tablename__ = "ratings"
@@ -162,6 +175,28 @@ class Rating(db.Model):
     # Defining a relationship to the Skirun class from the ratings table
     skirun = db.relationship("Skirun",
                              backref=db.backref("ratings"))
+
+    def __repr__(self):
+        """ Provide helpful information about this class"""
+
+        return "<User rating_id={} for skirun_id={}>".format(self.rating_id, self.skirun_id)
+
+
+class Weather(db.Model):
+    """information about weather on Blackcomb & Whistler mountain """
+
+    # Lets SQL alchemy know which columns to add
+    weather_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    daily_snowfall = db.Column(db.Integer)
+    overnight_snowfall = db.Column(db.String(150))
+    forcast_icon = db.Column(db.String(150))
+    wind_forcast = db.Column(db.String(150))
+    snow_forcast = db.Column(db.String(150))
+
+    def __repr__(self):
+        """ Provide helpful information about each loading location"""
+
+        return "<dailysnow={} snowforcast={}>".format(self.daily_snowfall, self.snow_forcast)
 
 ##############################################################################
 # Helper functions

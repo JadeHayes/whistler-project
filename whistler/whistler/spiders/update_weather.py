@@ -39,6 +39,7 @@ class WeatherSpider(scrapy.Spider):
         overnight_snowfall_inches = snowfall_rept['OvernightSnowfall']['Inches']
         overnight_snowfall_centimeters = snowfall_rept['OvernightSnowfall']['Centimeters']
         overnight_snowfall = (int(overnight_snowfall_centimeters) * 0.39) + int(overnight_snowfall_inches)
+
         if overnight_snowfall < 1:
             overnight_snowfall = 0
         # import pdb; pdb.set_trace()

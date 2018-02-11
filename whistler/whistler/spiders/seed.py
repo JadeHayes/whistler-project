@@ -2,7 +2,7 @@ import scrapy
 from scrapy.selector import Selector
 import requests
 import json
-from model import db, connect_to_db, Skirun, Lift, Category, SkirunLift, User, Rating
+from model import db, connect_to_db, Skirun, Lift, Category, SkirunLift, User, Rating, SkillLevel
 from flask import Flask
 import os
 import random
@@ -81,10 +81,16 @@ class WhistlerSpider(scrapy.Spider):
                     lift_obj.skiruns.append(run_obj)
             db.session.commit()
 
-        categories = ['tree', 'groomer', 'park', 'bowl']
-        for category in categories:
+        categorieslst = ['tree', 'groomer', 'park', 'bowl']
+        for category in categorieslst:
             add_category = Category(cat=category)
             db.session.add(add_category)
+        db.session.commit()
+
+        levels = ['green', 'blue', 'black']
+        for level in levels:
+            add_level = SkillLevel(level=level)
+            db.session.add(add_level)
         db.session.commit()
 
         # add category to each run
@@ -118,11 +124,17 @@ class WhistlerSpider(scrapy.Spider):
             lname = user['lname']
             email = user['email']
             zipcode = user['zipcode']
+            rand_category = random.choice(categorieslst)
+            rand_level = random.choice(levels)
+            level = SkillLevel.query.filter(SkillLevel.level == rand_level).first()
+            category = Category.query.filter(Category.cat == rand_category).first()
 
             clients = User(fname=fname,
                            lname=lname,
                            email=email,
-                           zipcode=zipcode)
+                           zipcode=zipcode,
+                           category_id=category.category_id,
+                           level_id=level.level_id)
 
             db.session.add(clients)
 
