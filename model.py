@@ -17,9 +17,7 @@ class Skirun(db.Model):
 
     # Lets SQL alchemy know which columns to add
     skirun_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    # lift_id = db.Column(db.Integer, db.ForeignKey('lifts.lift_id'))
     category_id = db.Column(db.Integer, db.ForeignKey('categories.category_id'))
-    # level_id = db.Column(db.Integer, db.ForeignKey('levels.level_id'))
     groomed = db.Column(db.Boolean)
     status = db.Column(db.Boolean)
     name = db.Column(db.String(200))
@@ -48,13 +46,9 @@ class Lift(db.Model):
     name = db.Column(db.String(150))
     status = db.Column(db.String(150))
     mountain = db.Column(db.String(200))
-    # loading_pt_id = db.Column(db.Integer, db.ForeignKey('loading_pts.loading_pt_id'), nullable=True)
 
    # Defining the realtionship between the lift class and the skirun table
     skiruns = db.relationship("Skirun", secondary="skiruns_lifts")
-
-    # Defining the relationship between the lift class and the loading table
-    # loading_pt = db.relationship("LoadingPt")
 
     def __repr__(self):
         """ Provide helpful information about each lift"""
@@ -88,7 +82,7 @@ class Category(db.Model):
     skiruns = db.relationship("Skirun")
 
     # Defining the relationship between the user class and the category table
-    users = db.relationship("User")
+    users = db.relationship("User", secondary='catusers')
 
     def __repr__(self):
         """ Provide helpful information about each category"""
@@ -103,28 +97,42 @@ class User(db.Model):
     __tablename__ = "users"
 
     #Creating the table
-    # Lets SQL alchemy know this is an integer primary key that auto increments
+    # Lets SQL alchemy know this is an integer pk
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     fname = db.Column(db.String(200), nullable=False)
     lname = db.Column(db.String(200), nullable=False)
     email = db.Column(db.String(200), nullable=False)
     zipcode = db.Column(db.String(200))
     password = db.Column(db.String(64), nullable=True)
-    category_id = db.Column(db.Integer,
-                            db.ForeignKey('categories.category_id'))
+    # category_id = db.Column(db.Integer,
+    #                         db.ForeignKey('categories.category_id'))
     level_id = db.Column(db.Integer,
                          db.ForeignKey('skill_levels.level_id'))
 
-    # Defining the relationship between the skilllevel class and the category table
-    skills = db.relationship("SkillLevel")
+    # Defining the relationship with skilllevel class
+    skills = db.relationship('SkillLevel')
 
-    # Defining the relationship between the user class and the category table
-    categories = db.relationship("Category")
+    # Defining the realtionship with category class
+    categories = db.relationship('Category', secondary='catusers')
 
     def __repr__(self):
         """ Provide helpful information about this class"""
 
         return "<User user_id={} email={}>".format(self.user_id, self.email)
+
+
+# FIXME USER <--> CATEGORIES
+class CatUser(db.Model):
+    __tablename__ = 'catusers'
+
+    # An associative table connecting users to categories
+    catuser_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    category_id = db.Column(db.Integer,
+                            db.ForeignKey('categories.category_id'),
+                            nullable=False)
+    user_id = db.Column(db.Integer,
+                        db.ForeignKey('users.user_id'),
+                        nullable=False)
 
 
 class SkillLevel(db.Model):

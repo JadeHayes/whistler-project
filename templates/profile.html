@@ -1,9 +1,38 @@
 {% extends 'base.html' %}
 {% block content %} 
 Log-in
-<h2 id='greeting'> Welcome Back {{ user.fname }}!</h2> 
-  
+<h2 id='greeting'> Welcome Back {{ user.fname.title() }}!</h2> 
 
+{% if cat_obj %}
+    Your personal ride report <br>
+    {% for cat in cat_obj%}
+        {% if cat.cat != 'groomer'%}
+            <br>{{ cat.cat.title() }} riding: <br>
+            {% for run in user_runs%}
+                {% if cat.category_id == run.category_id %}
+                    {{ run.name}}<br>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+<br>
+Freshly groomed <span style=color:{{user.skills.level}}> {{user.skills.level}} </span> runs: <br>
+
+<div style='display:inline-block' id='whistler'>
+Whistler: <br>
+{% for run in whistler %}
+    {{ run }} <br>
+{% endfor %}
+</div>
+
+<div style='display:inline-block' id='blackcomb'>
+Blackcomb: <br>
+{% for run in blackcomb %}
+    {{ run }} <br>
+{% endfor %}
+</div>
 
 
 {% endblock %}

@@ -6,7 +6,7 @@ from flask import (Flask, render_template, redirect, request, flash,
                    session)
 from flask_debugtoolbar import DebugToolbarExtension
 
-from model import connect_to_db, db, Category, Weather, Lift, Skirun, User, Rating
+from model import connect_to_db, db, Category, Weather, Lift, Skirun, User, Rating, SkillLevel
 from random import sample
 
 app = Flask(__name__)
@@ -65,12 +65,17 @@ def register():
 def add_info():
     """Saves users registration information in the db"""
 
+    # Get user information from registration form input
+    #  FIXME: need to add users level & ride pref
     fname = request.form.get('fname')
     lname = request.form.get('lname')
     email = request.form.get('email')
     password = request.form.get('password')
     zipcode = request.form.get('zipcode')
+    level = request.form['level']
+    checkboxes = request.form.getlist('category')
 
+    # FIXME: How do I instantiate a new user with multiple categories?
     # Query to see if users email and password are already in the db
     user = User.query.filter_by(email=email).first()
 
@@ -81,7 +86,8 @@ def add_info():
     else:
         new_user = User(fname=fname, lname=lname,
                         email=email, password=password,
-                        zipcode=zipcode)
+                        zipcode=zipcode,
+                        level=level)
         flash('Welcome to WhistlerMTN')
         db.session.add(new_user)
         db.session.commit()
@@ -120,6 +126,7 @@ def index():
         for run in skirun_objs:
             if run.name == "18' Half Pipe":
                 pipe = run
+
         # run_objs = db.session.query(Skirun).join(Category).filter(Category.cat ==daily_cat).all()
         cat_id = Category.query.filter_by(cat=daily_cat).first().category_id
         # Can do .limit(3)
@@ -142,6 +149,7 @@ def index():
 @app.route('/lifts')
 def show_lifts():
     """Lifts & skiruns associated with"""
+    # If the user is in the session, show lifts.  If not, redirect to login
     if session.get('logged_in'):
         lifts = Lift.query.all()
         return render_template("lifts.html", lifts=lifts)
@@ -153,10 +161,42 @@ def show_lifts():
 @app.route('/profile')
 def profile():
     """user's profile page"""
+    # if user is in the session, show profile page.  If not, redirect home
     if session.get('logged_in'):
         userid = session['logged_in']
-        user = User.query.filter(User.user_id==userid).first()
-        return render_template("profile.html", user=user)
+        user = User.query.filter(User.user_id == userid).first()
+        skirun_objs = Skirun.query.all()
+        whistler = set()
+        blackcomb = set()
+
+        for run in skirun_objs:
+            if run.level == user.skills.level.title():
+                for lift in run.lifts:
+                    if lift.mountain == 'Whistler':
+                        whistler.add(run.name)
+                    elif lift.mountain == 'Blackcomb':
+                        blackcomb.add(run.name)
+
+        whistler = sample(whistler, 10)
+        blackcomb = sample(blackcomb, 10)
+
+        # check to see if the user has categories
+        if user.categories:
+            cat_obj = user.categories
+
+            # match the categories to the open skiruns
+            # user runs are lift object with skiruns attached
+            user_runs = []
+            for run in skirun_objs:
+                for cat in cat_obj:
+                    if run.category_id == cat.category_id and run.status:
+                        user_runs.append(run)
+
+            return render_template("profile.html", user=user, cat_obj=cat_obj,
+                                   user_runs=user_runs, whistler=whistler,
+                                   blackcomb=blackcomb, skirun_objs=skirun_objs)
+        return render_template("profile.html", user=user, whistler=[whistler],
+                               blackcomb=blackcomb)
     else:
         flash("Please log in first!")
         return redirect("/")

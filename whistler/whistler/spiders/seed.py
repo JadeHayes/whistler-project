@@ -2,7 +2,7 @@ import scrapy
 from scrapy.selector import Selector
 import requests
 import json
-from model import db, connect_to_db, Skirun, Lift, Category, SkirunLift, User, Rating, SkillLevel
+from model import db, connect_to_db, Skirun, Lift, Category, SkirunLift, User, Rating, SkillLevel, CatUser
 from flask import Flask
 import os
 import random
@@ -42,28 +42,27 @@ class WhistlerSpider(scrapy.Spider):
         runs_list = skiruns['GroomingAreas']
 
         for lifts_dict in runs_list:
-
             #add all the runs to the DB
             skirun_list = lifts_dict['Runs']
             lift_names = lifts_dict['Name']
             lift_names = lift_names.split(" - ")
 
+            # each ski run list is a list of runs that belong to one lift
             for skirun in skirun_list:
                 skirun_name = skirun['Name']
                 skirun_status = skirun['IsOpen']
                 skirun_groomed = skirun['IsGroomed']
                 level = skirun['Type']
-
-                #check here if run is already in DB, only add if it's not *
+                skirun_db = Skirun.query.all()
 
                 new_run = Skirun(name=skirun_name, groomed=skirun_groomed,
-                                 status=skirun_status, level=level)
+                                     status=skirun_status, level=level)
                 db.session.add(new_run)
             db.session.commit()
 
             #make the connections
             for lift_name in lift_names:
-                # Cahnge to the same lift names in the scrape
+                # Change to the same lift names in the scrape
                 if lift_name == 'Crystal Zone':
                     lift_name = 'Crystal Ridge Express'
                 if lift_name == 'Freestyle Half-pipes' or lift_name == 'Habitat Terrain Park':
@@ -79,6 +78,7 @@ class WhistlerSpider(scrapy.Spider):
                     skirun_name = run['Name']
                     run_obj = Skirun.query.filter(Skirun.name == skirun_name).first()
                     lift_obj.skiruns.append(run_obj)
+
             db.session.commit()
 
         categorieslst = ['tree', 'groomer', 'park', 'bowl']
@@ -124,28 +124,36 @@ class WhistlerSpider(scrapy.Spider):
             lname = user['lname']
             email = user['email']
             zipcode = user['zipcode']
-            rand_category = random.choice(categorieslst)
+
+            # check to see user selected categories
+            if user.get('category'):
+                category = user['category']
+
+            # level for fake data
             rand_level = random.choice(levels)
             level = SkillLevel.query.filter(SkillLevel.level == rand_level).first()
-            category = Category.query.filter(Category.cat == rand_category).first()
 
             clients = User(fname=fname,
                            lname=lname,
                            email=email,
                            zipcode=zipcode,
-                           category_id=category.category_id,
-                           level_id=level.level_id)
+                           level_id=level.level_id,
+                           password='123')
 
             db.session.add(clients)
 
-        # commit work to the db
-        db.session.commit()
+            #make the connections
+            for cat in category:
+                user_obj = User.query.filter(User.email == email).first()
+                catusr = Category.query.filter(Category.cat == cat).first()
+                catusr.users.append(user_obj)
+            db.session.commit()
 
         ratings = open("../../../static/rating.txt").read()
         ratings = ratings.strip()
         ratings = ratings.split('|')
-        # import pdb; pdb.set_trace();
 
+        #  loop through the list of comments
         for comment in ratings:
             comment = comment[:140]
             user_id = random.randint(1, 100)

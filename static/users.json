@@ -3,109 +3,126 @@
         "fname": "Allen",
         "lname": "Rojas",
         "email": "ut.sem.Nulla@ipsumPhasellusvitae.com",
-        "zipcode": "299823"
+        "zipcode": "299823", 
+        "category" : ["park"]
     },
     {
         "fname": "Declan",
         "lname": "Horne",
         "email": "feugiat.placerat.velit@euelit.com",
-        "zipcode": "32775"
+        "zipcode": "32775", 
+        "category" : ["tree", "bowl"]
     },
     {
         "fname": "Guy",
         "lname": "Williamson",
         "email": "dolor@Maurisvel.org",
-        "zipcode": "5788"
+        "zipcode": "5788", 
+        "category" : ["bowl", "park", "tree"]
     },
     {
         "fname": "Imelda",
         "lname": "Roman",
         "email": "nonummy.ut.molestie@sedest.org",
-        "zipcode": "43906"
+        "zipcode": "43903", 
+        "category" : ["bowl", "park", "tree"]
     },
     {
         "fname": "Suki",
         "lname": "Barber",
         "email": "scelerisque.sed.sapien@vitaeodio.com",
-        "zipcode": "8545"
+        "zipcode": "8545", 
+        "category" : ["tree", "bowl"]
     },
     {
         "fname": "Julie",
         "lname": "Webb",
         "email": "pharetra.ut@seddolor.edu",
-        "zipcode": "9534"
+        "zipcode": "9533", 
+        "category" : ["groomer"]
     },
     {
         "fname": "Kirsten",
         "lname": "Barron",
         "email": "tristique.senectus.et@Mauris.com",
-        "zipcode": "6753"
+        "zipcode": "6753", 
+        "category" : ["park"]
     },
     {
         "fname": "Quintessa",
         "lname": "Conway",
         "email": "odio@Utnecurna.com",
-        "zipcode": "15210"
+        "zipcode": "15213", 
+        "category" : ["groomer"]
     },
     {
         "fname": "Shafira",
         "lname": "Graves",
         "email": "in.cursus@inconsequat.net",
-        "zipcode": "H3E 4P1"
+        "zipcode": "H3E 4P1", 
+        "category" : ["bowl", "park", "tree", "groomer"]
     },
     {
         "fname": "Breanna",
         "lname": "Malone",
         "email": "vestibulum.Mauris@consectetueradipiscing.net",
-        "zipcode": "2248"
+        "zipcode": "2248", 
+        "category" : ["bowl", "park", "tree"]
     },
     {
         "fname": "Kermit",
         "lname": "Hartman",
         "email": "quis@in.net",
-        "zipcode": "2965"
+        "zipcode": "2965", 
+        "category" : ["tree", "bowl"]
     },
     {
         "fname": "Jada",
         "lname": "Craft",
         "email": "cursus.purus.Nullam@magna.com",
-        "zipcode": "09884"
+        "zipcode": "09883", 
+        "category" : ["groomer"]
     },
     {
         "fname": "Jin",
         "lname": "Barker",
         "email": "nulla.In@Quisque.edu",
-        "zipcode": "2549"
+        "zipcode": "2543", "category" : ["park"]
     },
     {
         "fname": "Yvette",
         "lname": "Herrera",
         "email": "Suspendisse.sed@Sed.com",
-        "zipcode": "61021"
+        "zipcode": "61021", 
+        "category" : ["bowl", "park", "tree", "groomer"]
     },
     {
         "fname": "Jada",
         "lname": "Shepherd",
         "email": "sed@ipsumprimisin.com",
-        "zipcode": "58778"
+        "zipcode": "58778", 
+        "category" : ["bowl", "park", "tree"]
     },
     {
         "fname": "Herman",
         "lname": "Hamilton",
         "email": "vel.mauris.Integer@odioapurus.ca",
-        "zipcode": "42108"
+        "zipcode": "42108", 
+        "category" : ["bowl", "park", "tree"]
     },
     {
         "fname": "Sarah",
         "lname": "Ingram",
         "email": "enim@lectus.com",
-        "zipcode": "96885"
+        "zipcode": "96885", 
+        "category" : ["tree", "bowl"]
     },
     {
         "fname": "Jeanette",
         "lname": "Spears",
         "email": "neque.Morbi.quis@nec.net",
-        "zipcode": "25052"
+        "zipcode": "25053", 
+        "category" : ["bowl", "park"]
     },
     {
         "fname": "Beatrice",
@@ -117,73 +134,85 @@
         "fname": "Ayanna",
         "lname": "French",
         "email": "ligula.Aenean.euismod@In.edu",
-        "zipcode": "11419"
+        "zipcode": "11413", 
+        "category" : ["park"]
     },
     {
         "fname": "Calista",
         "lname": "Park",
         "email": "molestie@elitAliquam.com",
-        "zipcode": "H5X 6B0"
+        "zipcode": "H5X 6B3", 
+        "category" : ["groomer"]
     },
     {
         "fname": "Hakeem",
         "lname": "Burks",
         "email": "orci.Ut.semper@nequeInornare.edu",
-        "zipcode": "54713"
+        "zipcode": "54713", 
+        "category" : ["park"]
     },
     {
         "fname": "Orson",
         "lname": "Mclean",
         "email": "vitae@montesnasceturridiculus.net",
-        "zipcode": "74-433"
+        "zipcode": "74-433", 
+        "category" : ["park"]
     },
     {
         "fname": "Wylie",
         "lname": "David",
         "email": "Phasellus@noncursusnon.org",
-        "zipcode": "99690"
+        "zipcode": "99693", 
+        "category" : ["groomer"]
     },
     {
         "fname": "Chanda",
         "lname": "Ford",
         "email": "tellus.Phasellus@quismassaMauris.net",
-        "zipcode": "85-346"
+        "zipcode": "85-343", 
+        "category" : ["bowl", "park", "tree"]
     },
     {
         "fname": "Ursula",
         "lname": "Hale",
         "email": "penatibus.et@estNunclaoreet.net",
-        "zipcode": "39921"
+        "zipcode": "39921", 
+        "category" : ["bowl", "park", "tree", "groomer"]
     },
     {
         "fname": "Zane",
         "lname": "Walls",
         "email": "ipsum.Suspendisse.non@diam.org",
-        "zipcode": "25768-194"
+        "zipcode": "25768-193", 
+        "category" : ["groomer"]
     },
     {
         "fname": "Kuame",
         "lname": "Rhodes",
         "email": "semper@rutrumjustoPraesent.net",
-        "zipcode": "K3A 3P0"
+        "zipcode": "K3A 3P3", 
+        "category" : ["groomer"]
     },
     {
         "fname": "Carlos",
         "lname": "Carney",
         "email": "erat.vel.pede@et.com",
-        "zipcode": "74149"
+        "zipcode": "74143", 
+        "category" : ["park"]
     },
     {
         "fname": "Mark",
         "lname": "Vargas",
         "email": "vulputate.lacus@vulputatevelit.ca",
-        "zipcode": "9334"
+        "zipcode": "9333", 
+        "category" : ["groomer"]
     },
     {
         "fname": "Germaine",
         "lname": "Hart",
         "email": "magnis.dis.parturient@disparturientmontes.com",
-        "zipcode": "3679"
+        "zipcode": "3673", 
+        "category" : ["park"]
     },
     {
         "fname": "Sara",
@@ -195,73 +224,85 @@
         "fname": "Neil",
         "lname": "Reeves",
         "email": "morbi.tristique@orcilobortis.ca",
-        "zipcode": "70701"
+        "zipcode": "70701", 
+        "category" : ["bowl", "park", "tree", "groomer"]
     },
     {
         "fname": "Charity",
         "lname": "Hines",
         "email": "Integer.urna@sodaleseliterat.edu",
-        "zipcode": "75860"
+        "zipcode": "75863", 
+        "category" : ["groomer"]
     },
     {
         "fname": "Emmanuel",
         "lname": "Glover",
         "email": "justo@magna.net",
-        "zipcode": "7492"
+        "zipcode": "7493", 
+        "category" : ["bowl", "park"]
     },
     {
         "fname": "Chandler",
         "lname": "Richmond",
         "email": "quis@velit.ca",
-        "zipcode": "17094"
+        "zipcode": "17093", 
+        "category" : ["groomer"]
     },
     {
         "fname": "Remedios",
         "lname": "Montoya",
         "email": "metus.sit.amet@Uttincidunt.edu",
-        "zipcode": "3879"
+        "zipcode": "3873", 
+        "category" : ["park"]
     },
     {
         "fname": "Ulla",
         "lname": "Graham",
         "email": "metus@metusurna.com",
-        "zipcode": "3472"
+        "zipcode": "3473", 
+        "category" : ["bowl", "park"]
     },
     {
         "fname": "Damian",
         "lname": "Henderson",
         "email": "Aenean.egestas@eleifendCrassed.org",
-        "zipcode": "38-130"
+        "zipcode": "38-133", 
+        "category" : ["groomer"]
     },
     {
         "fname": "Chancellor",
         "lname": "Cash",
         "email": "mauris.erat.eget@volutpatnunc.com",
-        "zipcode": "29277-146"
+        "zipcode": "29277-143", 
+        "category" : ["bowl", "park", "tree"]
     },
     {
         "fname": "Wayne",
         "lname": "Barber",
         "email": "lobortis@molestieorci.org",
-        "zipcode": "93181"
+        "zipcode": "93181", 
+        "category" : ["bowl", "park", "tree", "groomer"]
     },
     {
         "fname": "Elijah",
         "lname": "Spence",
         "email": "in.cursus.et@risus.com",
-        "zipcode": "51795"
+        "zipcode": "51795", 
+        "category" : ["tree", "bowl"]
     },
     {
         "fname": "Hammett",
         "lname": "Soto",
         "email": "vestibulum.nec.euismod@utlacusNulla.ca",
-        "zipcode": "7229"
+        "zipcode": "7223", 
+        "category" : ["park"]
     },
     {
         "fname": "Justina",
         "lname": "Grimes",
         "email": "Aenean.eget@odioauctorvitae.edu",
-        "zipcode": "7984"
+        "zipcode": "7983", 
+        "category" : ["groomer"]
     },
     {
         "fname": "Hayfa",
@@ -273,19 +314,22 @@
         "fname": "Ferdinand",
         "lname": "York",
         "email": "magna@ligula.net",
-        "zipcode": "885848"
+        "zipcode": "885848", 
+        "category" : ["bowl", "park", "tree"]
     },
     {
         "fname": "Ralph",
         "lname": "Cox",
         "email": "sociis.natoque.penatibus@egestas.edu",
-        "zipcode": "04106"
+        "zipcode": "04103", 
+        "category" : ["bowl", "park", "tree"]
     },
     {
         "fname": "Amber",
         "lname": "Dunn",
         "email": "Nullam.velit.dui@ultricesposuerecubilia.ca",
-        "zipcode": "7269"
+        "zipcode": "7263", 
+        "category" : ["park"]
     },
     {
         "fname": "Tanisha",
@@ -297,7 +341,8 @@
         "fname": "Serena",
         "lname": "Navarro",
         "email": "lacus@est.com",
-        "zipcode": "52-274"
+        "zipcode": "52-273", 
+        "category" : ["groomer"]
     },
     {
         "fname": "Barclay",
@@ -309,19 +354,22 @@
         "fname": "Isaac",
         "lname": "Rose",
         "email": "libero.Morbi.accumsan@augueeutempor.com",
-        "zipcode": "95875"
+        "zipcode": "95875", 
+        "category" : ["tree", "bowl"]
     },
     {
         "fname": "Quon",
         "lname": "Robertson",
         "email": "augue@eget.org",
-        "zipcode": "13578"
+        "zipcode": "13578", 
+        "category" : ["bowl", "park", "tree"]
     },
     {
         "fname": "Kessie",
         "lname": "Gilliam",
         "email": "in.lobortis@Curabiturut.ca",
-        "zipcode": "5135"
+        "zipcode": "5135", 
+        "category" : ["tree", "bowl"]
     },
     {
         "fname": "Alexandra",
@@ -333,13 +381,15 @@
         "fname": "Benedict",
         "lname": "Mcbride",
         "email": "pede.nec.ante@maurisSuspendissealiquet.net",
-        "zipcode": "50604"
+        "zipcode": "50603", 
+        "category" : ["groomer"]
     },
     {
         "fname": "Baxter",
         "lname": "Wood",
         "email": "neque@Aeneansed.com",
-        "zipcode": "72156"
+        "zipcode": "72153", 
+        "category" : ["bowl", "park", "tree"]
     },
     {
         "fname": "Desiree",
@@ -351,25 +401,29 @@
         "fname": "Harlan",
         "lname": "Weeks",
         "email": "molestie.tortor@consectetuer.com",
-        "zipcode": "627610"
+        "zipcode": "627613", 
+        "category" : ["groomer"]
     },
     {
         "fname": "Rae",
         "lname": "Sampson",
         "email": "Cras.dictum.ultricies@enim.net",
-        "zipcode": "115853"
+        "zipcode": "115853", 
+        "category" : ["park"]
     },
     {
         "fname": "Beatrice",
         "lname": "Hahn",
         "email": "arcu.Vestibulum@ultrices.com",
-        "zipcode": "60165"
+        "zipcode": "60165", 
+        "category" : ["tree", "bowl"]
     },
     {
         "fname": "Abel",
         "lname": "Wheeler",
         "email": "Suspendisse@id.com",
-        "zipcode": "80759"
+        "zipcode": "80753", 
+        "category" : ["park"]
     },
     {
         "fname": "Ava",
@@ -381,37 +435,43 @@
         "fname": "Cade",
         "lname": "Harrell",
         "email": "imperdiet.non.vestibulum@mienimcondimentum.com",
-        "zipcode": "603819"
+        "zipcode": "603813", 
+        "category" : ["park"]
     },
     {
         "fname": "Doris",
         "lname": "Vega",
         "email": "Proin.vel.arcu@diamProin.edu",
-        "zipcode": "51215"
+        "zipcode": "51215", 
+        "category" : ["tree", "bowl"]
     },
     {
         "fname": "Hedwig",
         "lname": "Rojas",
         "email": "Aliquam@Phasellus.com",
-        "zipcode": "9084"
+        "zipcode": "9083", 
+        "category" : ["groomer"]
     },
     {
         "fname": "Omar",
         "lname": "Martinez",
         "email": "ultricies@lacusEtiam.net",
-        "zipcode": "3288"
+        "zipcode": "3288", 
+        "category" : ["bowl", "park", "tree"]
     },
     {
         "fname": "Genevieve",
         "lname": "Stanley",
         "email": "orci@blandit.ca",
-        "zipcode": "5512"
+        "zipcode": "5513", 
+        "category" : ["bowl", "park"]
     },
     {
         "fname": "Vera",
         "lname": "Lindsey",
         "email": "pede.sagittis@dolor.com",
-        "zipcode": "06530"
+        "zipcode": "06533", 
+        "category" : ["groomer"]
     },
     {
         "fname": "Tate",
@@ -423,7 +483,8 @@
         "fname": "Gabriel",
         "lname": "Donaldson",
         "email": "sem.semper@commodotincidunt.com",
-        "zipcode": "57991-323"
+        "zipcode": "57991-323", 
+        "category" : ["park"]
     },
     {
         "fname": "Iola",
@@ -435,19 +496,22 @@
         "fname": "Debra",
         "lname": "Romero",
         "email": "malesuada.Integer@ametloremsemper.edu",
-        "zipcode": "954525"
+        "zipcode": "954525", 
+        "category" : ["tree", "bowl"]
     },
     {
         "fname": "Wynter",
         "lname": "Moody",
         "email": "auctor@quisarcu.edu",
-        "zipcode": "16292"
+        "zipcode": "16293", 
+        "category" : ["bowl", "park"]
     },
     {
         "fname": "Sigourney",
         "lname": "Anthony",
         "email": "Nulla@egestasAliquam.com",
-        "zipcode": "96806"
+        "zipcode": "96803", 
+        "category" : ["bowl", "park", "tree"]
     },
     {
         "fname": "Meghan",
@@ -459,13 +523,15 @@
         "fname": "Maryam",
         "lname": "Holloway",
         "email": "fringilla@massanonante.edu",
-        "zipcode": "91558"
+        "zipcode": "91558", 
+        "category" : ["bowl", "park", "tree"]
     },
     {
         "fname": "Chester",
         "lname": "Mcclain",
         "email": "Donec.nibh.enim@Namnullamagna.org",
-        "zipcode": "758811"
+        "zipcode": "758811", 
+        "category" : ["bowl", "park", "tree", "groomer"]
     },
     {
         "fname": "Dominic",
@@ -477,37 +543,43 @@
         "fname": "Alyssa",
         "lname": "Macias",
         "email": "sollicitudin.orci@Phasellus.org",
-        "zipcode": "21602"
+        "zipcode": "21603", 
+        "category" : ["bowl", "park"]
     },
     {
         "fname": "Harrison",
         "lname": "Myers",
         "email": "elementum.at@Duiselementum.org",
-        "zipcode": "42-891"
+        "zipcode": "42-891", 
+        "category" : ["bowl", "park", "tree", "groomer"]
     },
     {
         "fname": "Brandon",
         "lname": "Hensley",
         "email": "at.nisi.Cum@turpisnecmauris.com",
-        "zipcode": "1758"
+        "zipcode": "1758", 
+        "category" : ["bowl", "park", "tree"]
     },
     {
         "fname": "Carissa",
         "lname": "Castaneda",
         "email": "in.faucibus@varius.com",
-        "zipcode": "60514"
+        "zipcode": "60513", 
+        "category" : ["groomer"]
     },
     {
         "fname": "Latifah",
         "lname": "Simon",
         "email": "amet@ultrices.net",
-        "zipcode": "14-091"
+        "zipcode": "14-091", 
+        "category" : ["bowl", "park", "tree", "groomer"]
     },
     {
         "fname": "Ruth",
         "lname": "Small",
         "email": "congue.elit.sed@loremvitae.com",
-        "zipcode": "02724"
+        "zipcode": "02723", 
+        "category" : ["groomer"]
     },
     {
         "fname": "Cedric",
@@ -519,13 +591,15 @@
         "fname": "Nichole",
         "lname": "Irwin",
         "email": "at.iaculis.quis@Nullamut.edu",
-        "zipcode": "389856"
+        "zipcode": "389853", 
+        "category" : ["bowl", "park", "tree"]
     },
     {
         "fname": "Avram",
         "lname": "Holmes",
         "email": "ridiculus.mus@auguescelerisquemollis.ca",
-        "zipcode": "87-204"
+        "zipcode": "87-203", 
+        "category" : ["groomer"]
     },
     {
         "fname": "Camilla",
@@ -543,7 +617,8 @@
         "fname": "Heidi",
         "lname": "Wade",
         "email": "erat.nonummy.ultricies@Donec.edu",
-        "zipcode": "57752"
+        "zipcode": "57753", 
+        "category" : ["bowl", "park"]
     },
     {
         "fname": "Jin",
@@ -555,13 +630,15 @@
         "fname": "Rajah",
         "lname": "Clark",
         "email": "ultrices.mauris.ipsum@egetlaoreetposuere.net",
-        "zipcode": "844214"
+        "zipcode": "844213", 
+        "category" : ["groomer"]
     },
     {
         "fname": "Cameron",
         "lname": "Gill",
         "email": "ipsum@Uttinciduntvehicula.edu",
-        "zipcode": "548122"
+        "zipcode": "548123", 
+        "category" : ["bowl", "park"]
     },
     {
         "fname": "Kevyn",
@@ -573,19 +650,22 @@
         "fname": "Ralph",
         "lname": "White",
         "email": "urna.Nunc@ascelerisquesed.edu",
-        "zipcode": "52793-650"
+        "zipcode": "52793-653", 
+        "category" : ["groomer"]
     },
     {
         "fname": "Faith",
         "lname": "Foreman",
         "email": "Nulla@tristiqueac.org",
-        "zipcode": "0056"
+        "zipcode": "0053", 
+        "category" : ["bowl", "park", "tree"]
     },
     {
         "fname": "Barrett",
         "lname": "Swanson",
         "email": "lorem@sempereratin.org",
-        "zipcode": "110903"
+        "zipcode": "110903", 
+        "category" : ["park"]
     },
     {
         "fname": "Daryl",
@@ -597,6 +677,7 @@
         "fname": "Cecilia",
         "lname": "Murphy",
         "email": "Duis.mi@feugiatplacerat.com",
-        "zipcode": "0135"
+        "zipcode": "0135", 
+        "category" : ["tree", "bowl"]
     }
 ]

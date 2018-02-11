@@ -10,14 +10,23 @@
     <p> zip code: <input type="text" pattern="[0-9]{5}" title="Five digit zip code" /></p>
 
         <p> Which level skiruns do you prefer? </p>
+            <div>
+                <input type="radio" id="green" name="level" value="beginner">
+                    <label for="green">Green trails</label>
+                <input type="radio" id="blue" name="level" value="intermediate">
+                    <label for="blue">Blue trails</label>
+                <input type="radio" id="black" name="level" value="expert">
+                    <label for="black">Black trails</label>
+  </div>
+
         <p> Where do you like to ride most? </p>
-        <input id="groomers" type="checkbox" name="subscribe" value="groomed">    <label for="groomers">Freshly Groomed Runs</label>
-        <input id="trees" type="checkbox">
+        <input id="groomers" type="checkbox" name="category" value="groomed">    <label for="groomers">Freshly Groomed Trails</label>
+        <input id="trees" type="checkbox" name="category" value="trees">
             <label for="trees">Powdery Trees</label>
-        <input id="bowls" type="checkbox"> 
+        <input id="bowls" type="checkbox" name="category" value="bowls"> 
             <label for="bowls">Open Bowls</label>
-        <input id="park" type="checkbox"> 
-            <label for="park">Park Riding</label>
+        <input id="park" type="checkbox" name="category" value="groomed"> 
+            <label for="park">Park</label> <br>
 
     <input type='submit' value='go!'>
 </form>
