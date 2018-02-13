@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %} 
+
+
+<h2> {{ skirun.name }} </h2>
+<div>
+ <!--  Site the photo: https://perryandjody.wordpress.com/2013/05/31/whistler-in-winter-canada/ -->
+  <img src="https://perryandjody.files.wordpress.com/2013/05/untitled_panorama1.jpg" class='container'>
+</div>
+<div id='user_ratings'>
+<table class='table table-striped'>
+  <tr>
+    <th align="left">Rating</th>
+    <th align="center">Comment</th> 
+  </tr>
+    {% for rating in ratings %}
+  <tr>
+    <td> {{ rating.rating }} </td>
+    <td> {{ rating.comment }} </td> 
+  </tr>
+    {% endfor %}
+</table>   
+</div>
+
+
+
+{% if 'logged_in' in session %}
+    <form action="/add-rating" method="POST">
+        <input type='hidden' name='skirun_id' value = '{{ ratings[0].skirun.skirun_id }}'>
+        <input type='hidden' name='user_id' value = '{{ user_id }}'>
+        <div class='col-xs-6'>
+        Rate this run:
+         <input type="radio" id="1" name="rating" value="1">
+            <label for="1">1</label>
+
+        <input type="radio" id="2" name="rating" value="2">
+            <label for="2">2</label>
+
+        <input type="radio" id="3" name="rating" value="3">
+            <label for="3">3</label>
+
+        <input type="radio" id="3" name="rating" value="4">
+            <label for="4">4</label>
+
+        <input type="radio" id="3" name="rating" value="3">
+            <label for="5">5</label>
+        </div>
+  </div>
+  <div class='col-xs-6'>
+     Description: <textarea name='description' rows="3" cols="100">This run is awesome!</textarea>
+        <input class='btn' type='submit'>
+  </div>
+    </form>
+{% endif %}
+{% endblock %}
