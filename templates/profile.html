@@ -1,38 +1,39 @@
 {% extends 'base.html' %}
 {% block content %} 
-Log-in
+
 <h2 id='greeting'> Welcome Back {{ user.fname.title() }}!</h2> 
 
 {% if cat_obj %}
     Your personal ride report <br>
     {% for cat in cat_obj%}
+<div class='col-xs-4' style='padding:15px;'>
         {% if cat.cat != 'groomer'%}
-            <br>{{ cat.cat.title() }} riding: <br>
+            <h5> {{ cat.cat.title() }} riding: </h5> 
             {% for run in user_runs%}
                 {% if cat.category_id == run.category_id %}
-                    {{ run.name}}<br>
+                    {{ run.lifts[0].mountain }} | {{ run.name }}<br>
                 {% endif %}
             {% endfor %}
         {% endif %}
+</div>
     {% endfor %}
 {% endif %}
 
-<br>
-Freshly groomed <span style=color:{{user.skills.level}}> {{user.skills.level}} </span> runs: <br>
 
-<div style='display:inline-block' id='whistler'>
-Whistler: <br>
-{% for run in whistler %}
-    {{ run }} <br>
-{% endfor %}
+<div id='user_ratings' class='col-xs-12'>
+<table class='table table-striped'>
+  <tr>
+    <th align="center">Skirun</th>
+    <th align="center">Rating</th> 
+    <th align="left">Comment</th>
+  </tr>
+  <tr>
+    <!-- This link is connecting to the /rating_id -->
+    <td> <a href="/{{ratings.skirun.name}}"> {{ ratings.skirun.name }} </a></td>
+    <td> {{ ratings.rating }} </td>
+    <td> {{ ratings.comment }} </td> 
+  </tr>
+</table>   
 </div>
-
-<div style='display:inline-block' id='blackcomb'>
-Blackcomb: <br>
-{% for run in blackcomb %}
-    {{ run }} <br>
-{% endfor %}
-</div>
-
 
 {% endblock %}

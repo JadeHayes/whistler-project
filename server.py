@@ -6,7 +6,7 @@ from flask import (Flask, render_template, redirect, request, flash,
                    session)
 from flask_debugtoolbar import DebugToolbarExtension
 
-from model import connect_to_db, db, Category, Weather, Lift, Skirun, User, Rating, SkillLevel
+from model import connect_to_db, db, Category, Weather, Lift, Skirun, User, Rating, SkillLevel, CatUser
 from random import sample
 
 app = Flask(__name__)
@@ -72,10 +72,9 @@ def add_info():
     email = request.form.get('email')
     password = request.form.get('password')
     zipcode = request.form.get('zipcode')
-    level = request.form['level']
+    level_id = request.form.get('level')
     checkboxes = request.form.getlist('category')
 
-    # FIXME: How do I instantiate a new user with multiple categories?
     # Query to see if users email and password are already in the db
     user = User.query.filter_by(email=email).first()
 
@@ -86,12 +85,24 @@ def add_info():
     else:
         new_user = User(fname=fname, lname=lname,
                         email=email, password=password,
-                        zipcode=zipcode,
-                        level=level)
+                        zipcode=zipcode, level_id=level_id)
         flash('Welcome to WhistlerMTN')
         db.session.add(new_user)
         db.session.commit()
         session['logged_in'] = new_user.user_id
+
+        for category_id in checkboxes:
+            new_cat = CatUser(user_id=new_user.user_id, category_id=category_id)
+            db.session.add(new_cat)
+        db.session.commit()
+
+        first = Rating(user_id=new_user.user_id,
+                              rating=5,
+                              skirun_id=1,
+                              comment='ex: Best run for a great view')
+        db.session.add(first)
+        db.session.commit()
+
         return redirect('/home')
 
 
@@ -165,20 +176,25 @@ def profile():
     if session.get('logged_in'):
         userid = session['logged_in']
         user = User.query.filter(User.user_id == userid).first()
-        skirun_objs = Skirun.query.all()
-        whistler = set()
-        blackcomb = set()
 
-        for run in skirun_objs:
-            if run.level == user.skills.level.title():
-                for lift in run.lifts:
-                    if lift.mountain == 'Whistler':
-                        whistler.add(run.name)
-                    elif lift.mountain == 'Blackcomb':
-                        blackcomb.add(run.name)
+        # grab all of the users ratings
+        ratings = Rating.query.filter(Rating.user_id == userid).first()
 
-        whistler = sample(whistler, 10)
-        blackcomb = sample(blackcomb, 10)
+        lifts = Lift.query.all()
+        runs = Skirun.query.all()
+
+        skirun_id = Skirun.query.filter(Skirun.skirun_id==ratings.skirun_id).first()
+        user_skill = user.skills.level.title()
+
+        whistler = []
+        blackcomb = []
+
+        for lift in lifts:
+            if lift.mountain == 'Whistler':
+                whistler.append(lift)
+            else:
+                blackcomb.append(lift)
+        mountains = [whistler, blackcomb]
 
         # check to see if the user has categories
         if user.categories:
@@ -187,19 +203,63 @@ def profile():
             # match the categories to the open skiruns
             # user runs are lift object with skiruns attached
             user_runs = []
-            for run in skirun_objs:
+            for run in runs:
                 for cat in cat_obj:
                     if run.category_id == cat.category_id and run.status:
                         user_runs.append(run)
 
             return render_template("profile.html", user=user, cat_obj=cat_obj,
-                                   user_runs=user_runs, whistler=whistler,
-                                   blackcomb=blackcomb, skirun_objs=skirun_objs)
-        return render_template("profile.html", user=user, whistler=[whistler],
-                               blackcomb=blackcomb)
+                                   user_runs=user_runs, user_skill=user_skill,
+                                   ratings=ratings, run=run, skirun_id=skirun_id,
+                                   mountains=mountains)
+        return render_template("profile.html", user=user, user_runs=user_runs,
+                                runs=runs, user_skill=user_skill,skirun_id=skirun_id)
     else:
         flash("Please log in first!")
         return redirect("/")
+
+
+@app.route('/<name>')
+def skiruns(name):
+    """Display skirun Ratings."""
+    ratings = Rating.query.join(Skirun).filter(Skirun.name == name).all()
+
+    # get the skirun object run
+    skirun = Skirun.query.filter(Skirun.name == name).first()
+    user_id = session['logged_in']
+
+
+    return render_template("skirun_ratings.html",
+                           ratings=ratings, user_id=user_id, skirun=skirun)
+
+
+@app.route('/add-rating', methods=['POST'])
+def add_rating():
+    """Adding Skirun rating."""
+
+    skirun_id = request.form.get('skirun_id')
+    new_rating = int(request.form.get('rating'))
+    user_id = request.form.get('skirun_id')
+    description = session.get('description')
+
+    # rating = Rating.query.filter(Rating.user_id == user_id, Rating.movie_id == movie_id).first()
+
+    # if rating:
+    #     rating.score = new_rating
+    #     db.session.commit()
+    # else:
+    #     rating = Rating(movie_id=movie_id,
+    #                     user_id=user_id,
+    #                     score=new_rating)
+    #     db.session.add(rating)
+    #     db.session.commit()
+
+
+@app.route('/trailmap')
+def show_trailmap():
+    """ Display trailmap."""
+
+    return render_template("trail_map.html")
 
 ##############################################################################
 

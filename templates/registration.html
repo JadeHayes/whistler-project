@@ -1,5 +1,20 @@
 {% extends 'base.html' %}
 {% block content %} 
+<script type="text/javascript">
+$(document).ready(function () {
+    $('#checkBtn').click(function() {
+      checked = $("input[type=checkbox]:checked").length;
+
+      if(!checked) {
+        alert("You must check at least one checkbox.");
+        return false;
+      }
+
+    });
+});
+</script>
+
+
 <h3> Registration </h3>
 <div id="registration">
 <form action='/register' method='POST'>
@@ -7,31 +22,30 @@
     <p> Last name:  <input type='text' name='lname' required> </p><br>
     <p> email: <input type='email' name='email' required></p>
     <p> password: <input type='password' name='password' required></p>
-    <p> zip code: <input type="text" pattern="[0-9]{5}" title="Five digit zip code" /></p>
+    <p> zip code: <input type="text" pattern="[0-9]{5}" name="zipcode" /></p>
 
-        <p> Which level skiruns do you prefer? </p>
+        <p> Which level skier/rider are you? </p>
             <div>
-                <input type="radio" id="green" name="level" value="beginner">
-                    <label for="green">Green trails</label>
-                <input type="radio" id="blue" name="level" value="intermediate">
-                    <label for="blue">Blue trails</label>
-                <input type="radio" id="black" name="level" value="expert">
-                    <label for="black">Black trails</label>
+                <input type="radio" id="green" name="level" value="1" required>
+                    <label for="green">Beginner</label>
+                <input type="radio" id="blue" name="level" value="2" required>
+                    <label for="blue">Intermediate</label>
+                <input type="radio" id="black" name="level" value="3" required>
+                    <label for="black">Advanced</label>
   </div>
 
         <p> Where do you like to ride most? </p>
-        <input id="groomers" type="checkbox" name="category" value="groomed">    <label for="groomers">Freshly Groomed Trails</label>
-        <input id="trees" type="checkbox" name="category" value="trees">
+    <div class="checkgroup">
+        <input id="groomers" type="checkbox" name="category" value="2" class='data-grouprequired'>    
+            <label for="groomers">Freshly Groomed Trails</label>
+        <input id="trees" type="checkbox" name="category" value="1">
             <label for="trees">Powdery Trees</label>
-        <input id="bowls" type="checkbox" name="category" value="bowls"> 
+        <input id="bowls" type="checkbox" name="category" value="4"> 
             <label for="bowls">Open Bowls</label>
-        <input id="park" type="checkbox" name="category" value="groomed"> 
+        <input id="park" type="checkbox" name="category" value="3"> 
             <label for="park">Park</label> <br>
-
-    <input type='submit' value='go!'>
+    </div>
+    <input type='submit' value='go!' id='checkBtn'>
 </form>
-<div>
-
-
 
 {% endblock %}

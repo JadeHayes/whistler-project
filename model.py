@@ -103,9 +103,7 @@ class User(db.Model):
     lname = db.Column(db.String(200), nullable=False)
     email = db.Column(db.String(200), nullable=False)
     zipcode = db.Column(db.String(200))
-    password = db.Column(db.String(64), nullable=True)
-    # category_id = db.Column(db.Integer,
-    #                         db.ForeignKey('categories.category_id'))
+    password = db.Column(db.String(64), nullable=False)
     level_id = db.Column(db.Integer,
                          db.ForeignKey('skill_levels.level_id'))
 
