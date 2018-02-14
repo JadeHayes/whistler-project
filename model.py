@@ -187,6 +187,12 @@ class Rating(db.Model):
 
         return "<User rating_id={} for skirun_id={}>".format(self.rating_id, self.skirun_id)
 
+    def to_dict(self):
+        """ returns the rating in dictionary form"""
+
+        return {'rating_id': self.rating_id,
+                'rating': self.rating,
+                'comment': self.comment}
 
 class Weather(db.Model):
     """information about weather on Blackcomb & Whistler mountain """

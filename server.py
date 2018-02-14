@@ -3,7 +3,7 @@
 from jinja2 import StrictUndefined
 
 from flask import (Flask, render_template, redirect, request, flash,
-                   session)
+                   session, jsonify)
 from flask_debugtoolbar import DebugToolbarExtension
 
 from model import connect_to_db, db, Category, Weather, Lift, Skirun, User, Rating, SkillLevel, CatUser
@@ -180,10 +180,12 @@ def profile():
         # grab all of the users ratings
         ratings = Rating.query.filter(Rating.user_id == userid).first()
 
+        # query all the lift and runs obj
         lifts = Lift.query.all()
         runs = Skirun.query.all()
 
-        skirun_id = Skirun.query.filter(Skirun.skirun_id==ratings.skirun_id).first()
+        # get the skirun_id on the ski run table that equals the skirun id on the ratings table
+        skirun_id = Skirun.query.filter(Skirun.skirun_id == ratings.skirun_id).first()
         user_skill = user.skills.level.title()
 
         whistler = []
@@ -213,11 +215,14 @@ def profile():
                                    ratings=ratings, run=run, skirun_id=skirun_id,
                                    mountains=mountains)
         return render_template("profile.html", user=user, user_runs=user_runs,
-                                runs=runs, user_skill=user_skill,skirun_id=skirun_id)
+                               runs=runs, user_skill=user_skill, skirun_id=skirun_id)
     else:
         flash("Please log in first!")
         return redirect("/")
 
+@app.route("/favicon.ico")
+def do_nothing():
+    return "nope"
 
 @app.route('/<name>')
 def skiruns(name):
@@ -227,7 +232,6 @@ def skiruns(name):
     # get the skirun object run
     skirun = Skirun.query.filter(Skirun.name == name).first()
     user_id = session['logged_in']
-
 
     return render_template("skirun_ratings.html",
                            ratings=ratings, user_id=user_id, skirun=skirun)
@@ -239,20 +243,39 @@ def add_rating():
 
     skirun_id = request.form.get('skirun_id')
     new_rating = int(request.form.get('rating'))
-    user_id = request.form.get('skirun_id')
-    description = session.get('description')
+    user_id = session.get('logged_in')
+    description = request.form.get('description')
+    skirun_obj = Skirun.query.filter_by(skirun_id=skirun_id).first()
+    name = skirun_obj.name
 
-    # rating = Rating.query.filter(Rating.user_id == user_id, Rating.movie_id == movie_id).first()
+    rating = Rating.query.filter(Rating.user_id == user_id, Rating.skirun_id == skirun_id).first()
 
-    # if rating:
-    #     rating.score = new_rating
-    #     db.session.commit()
-    # else:
-    #     rating = Rating(movie_id=movie_id,
-    #                     user_id=user_id,
-    #                     score=new_rating)
-    #     db.session.add(rating)
-    #     db.session.commit()
+    # if the user rating for the skirun is already in the system, update rating
+    # if not, add a new rating to the skirun page
+    if rating:
+        rating.rating = new_rating
+        db.session.commit()
+    else:
+        rating = Rating(skirun_id=skirun_id,
+                        user_id=user_id,
+                        rating=new_rating,
+                        comment=description)
+        db.session.add(rating)
+        db.session.commit()
+    return None #FIXME
+
+
+@app.route('/get-ratings.json')
+def get_ratings():
+    """ get the ratings"""
+
+    skirun_id = int(request.args.get('skirun_id'))
+    skirun = Skirun.query.get(skirun_id)
+
+    #  list of rating dictionaries
+    ratings = [rating.to_dict() for rating in skirun.ratings]
+
+    return jsonify({'ratings': ratings})
 
 
 @app.route('/trailmap')
