@@ -24,37 +24,14 @@ img {
 <h2> {{ skirun.name }} </h2>
 
 <div>
-{% if 'logged_in' in session %}
-    <form action="/add-rating" method="POST">
-        <input type='hidden' name='skirun_id' value = '{{ ratings[0].skirun.skirun_id }}'>
-        <input type='hidden' name='user_id' value = '{{ user_id }}'>
-        <div class='col-xs-6'>
-        Rate this run: <br>
-         <input type="radio" id="1" name="rating" value="1" required>
-            <label for="1">1</label>
-
-        <input type="radio" id="2" name="rating" value="2" required>
-            <label for="2">2</label>
-
-        <input type="radio" id="3" name="rating" value="3" required>
-            <label for="3">3</label>
-
-        <input type="radio" id="3" name="rating" value="4" required>
-            <label for="4">4</label>
-
-        <input type="radio" id="5" name="rating" value="5" required>
-            <label for="5">5</label>
-</div>
-<div class='col-xs-6'>
-      Description: <br><textarea class='input-lg resize' name='description' required>This run is awesome!</textarea><input class='btn' type='submit'>
-</form>
-</div>
-<div>
  <!--  Site the photo: https://perryandjody.wordpress.com/2013/05/31/whistler-in-winter-canada/ -->
-  <img src="https://perryandjody.files.wordpress.com/2013/05/untitled_panorama1.jpg" class='col-xs-12'>
+ <!--  <img src="https://perryandjody.files.wordpress.com/2013/05/untitled_panorama1.jpg" class='col-xs-12'> -->
 </div>
 
 <div id="root"> <!-- component will go in this div --> </div>
+
+
+
 <!-- react -->
 <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
@@ -64,13 +41,21 @@ img {
 
 <script type="text/javascript">
   let skirunId = {{ skirun.skirun_id }};
-  console.log(skirunId);
+  {% if 'logged_in' in session %}
+  let userLoggedIn = true;
+  {% else %}
+  let userLoggedIn = false;
+  {% endif %}
+
+  {% if rating %}
+  let ratingsExist = true;
+  {% else %}
+  let ratingsExist = false;
+  {% endif %}
 
 </script>
-<script src="/static/test.jsx" type="text/jsx">
+<script src="/static/ratingchart.jsx" type="text/jsx"></script>
+<script src="/static/ratingform.jsx" type="text/jsx"></script>
+<script src="/static/skirunpage.jsx" type="text/jsx"></script>
 
-
-</script>
-
-{% endif %}
 {% endblock %}

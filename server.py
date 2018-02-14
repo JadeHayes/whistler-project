@@ -227,42 +227,45 @@ def do_nothing():
 @app.route('/<name>')
 def skiruns(name):
     """Display skirun Ratings."""
-    ratings = Rating.query.join(Skirun).filter(Skirun.name == name).all()
+    rating = Rating.query.join(Skirun).filter(Skirun.name == name).first()
 
     # get the skirun object run
     skirun = Skirun.query.filter(Skirun.name == name).first()
-    user_id = session['logged_in']
+    # user_id = session.get('logged_in')
 
     return render_template("skirun_ratings.html",
-                           ratings=ratings, user_id=user_id, skirun=skirun)
+                           rating=rating, skirun=skirun)
 
 
-@app.route('/add-rating', methods=['POST'])
+@app.route('/add-rating.json', methods=['POST'])
 def add_rating():
     """Adding Skirun rating."""
 
     skirun_id = request.form.get('skirun_id')
-    new_rating = int(request.form.get('rating'))
+    new_score = int(request.form.get('rating'))
     user_id = session.get('logged_in')
     description = request.form.get('description')
-    skirun_obj = Skirun.query.filter_by(skirun_id=skirun_id).first()
-    name = skirun_obj.name
 
-    rating = Rating.query.filter(Rating.user_id == user_id, Rating.skirun_id == skirun_id).first()
+    rating = Rating.query.filter(Rating.user_id == user_id,
+                                 Rating.skirun_id == skirun_id).first()
 
     # if the user rating for the skirun is already in the system, update rating
     # if not, add a new rating to the skirun page
     if rating:
-        rating.rating = new_rating
+        rating.rating = new_score
+        rating.comment = description
         db.session.commit()
     else:
         rating = Rating(skirun_id=skirun_id,
-                        user_id=user_id,
-                        rating=new_rating,
-                        comment=description)
+                            user_id=user_id,
+                            rating=new_score,
+                            comment=description)
         db.session.add(rating)
         db.session.commit()
-    return None #FIXME
+
+    user_rating = rating.to_dict()
+
+    return jsonify({'new_rating': user_rating})
 
 
 @app.route('/get-ratings.json')
@@ -296,7 +299,7 @@ if __name__ == "__main__":
     connect_to_db(app)
 
     # Use the DebugToolbar
-    DebugToolbarExtension(app)
-    DEBUG_TB_INTERCEPT_REDIRECTS = False
+    # DebugToolbarExtension(app)
+    # DEBUG_TB_INTERCEPT_REDIRECTS = False
 
     app.run(port=5000, host='0.0.0.0')
