@@ -50,6 +50,8 @@ class WhistlerSpider(scrapy.Spider):
             # each ski run list is a list of runs that belong to one lift
             for skirun in skirun_list:
                 skirun_name = skirun['Name']
+                if '/' in skirun_name:
+                    skirun_name = skirun_name.replace('/', '-')
                 skirun_status = skirun['IsOpen']
                 skirun_groomed = skirun['IsGroomed']
                 level = skirun['Type']
@@ -75,7 +77,6 @@ class WhistlerSpider(scrapy.Spider):
 
                 # adding relationship
                 for run in skirun_list:
-                    skirun_name = run['Name']
                     run_obj = Skirun.query.filter(Skirun.name == skirun_name).first()
                     lift_obj.skiruns.append(run_obj)
 

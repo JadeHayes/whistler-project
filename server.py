@@ -224,6 +224,7 @@ def profile():
 def do_nothing():
     return "nope"
 
+
 @app.route('/<name>')
 def skiruns(name):
     """Display skirun Ratings."""

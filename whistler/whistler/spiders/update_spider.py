@@ -2,9 +2,12 @@ import scrapy
 from scrapy.selector import Selector
 import requests
 import json
-from model import db, connect_to_db, Skirun, Lift, SkirunLift
 from flask import Flask
 import os
+
+import sys
+sys.path.append('../../..')
+from model import db, connect_to_db, Skirun, Lift, SkirunLift
 
 
 app = Flask(__name__)
@@ -55,9 +58,10 @@ class WhistlerSpider(scrapy.Spider):
                 skirun_name = skirun['Name']
                 skirun_status = skirun['IsOpen']
                 skirun_groomed = skirun['IsGroomed']
-                skirun = Skirun.query.filter(Skirun.name == skirun_name).first()
+                # import pdb; pdb.set_trace()
+                skirun2 = Skirun.query.filter(Skirun.name == skirun_name).first()
 
-                skirun.status = skirun_status
-                skirun.groomed = skirun_groomed
+                skirun2.status = skirun_status
+                skirun2.groomed = skirun_groomed
 
             db.session.commit()

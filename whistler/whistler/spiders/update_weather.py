@@ -60,3 +60,4 @@ class WeatherSpider(scrapy.Spider):
         weather.forcast_icon = forcast_icon
 
         db.session.commit()
+        print "wooo hoooo-commited to db \n\n"
