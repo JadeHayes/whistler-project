@@ -19,7 +19,7 @@ class SkirunPage extends React.Component {
 
     let formInputs = new FormData();
 
-    let newScore = document.querySelector("input[name='rating']:checked]").value;
+    let newScore = document.querySelector("input[name='rating']:checked").value;
 
     let comment = document.querySelector("#description").value;
 

@@ -36,16 +36,25 @@ class WhistlerSpider(scrapy.Spider):
             liftstatus = lift_dict['Status']
             mountain = lift_dict['Mountain']
             new_lift = Lift(name=liftname, status=liftstatus, mountain=mountain)
+            # import pdb; pdb.set_trace()
             db.session.add(new_lift)
         db.session.commit()
 
+        # a list of dictionaries, with all the data of ski runs, separated by lifts
         runs_list = skiruns['GroomingAreas']
 
+        # lifts_dict is a dictionay where the key 'Runs' has a value of a
+        # list with all ski runs that belong to the lift.  The key 'Name' has a value
+        # of each lift that services those runs, split by "-"
         for lifts_dict in runs_list:
             #add all the runs to the DB
             skirun_list = lifts_dict['Runs']
+            # list of lift names separated by '-'
             lift_names = lifts_dict['Name']
-            lift_names = lift_names.split(" - ")
+            if lift_names == 'The Peak - T-Bar':
+                lift_names = ['The Peak', 'T-Bars']
+            else:
+                lift_names = lift_names.split(" - ")
 
             # each ski run list is a list of runs that belong to one lift
             for skirun in skirun_list:
@@ -55,7 +64,6 @@ class WhistlerSpider(scrapy.Spider):
                 skirun_status = skirun['IsOpen']
                 skirun_groomed = skirun['IsGroomed']
                 level = skirun['Type']
-                skirun_db = Skirun.query.all()
 
                 new_run = Skirun(name=skirun_name, groomed=skirun_groomed,
                                      status=skirun_status, level=level)
@@ -67,16 +75,23 @@ class WhistlerSpider(scrapy.Spider):
                 # Change to the same lift names in the scrape
                 if lift_name == 'Crystal Zone':
                     lift_name = 'Crystal Ridge Express'
-                if lift_name == 'Freestyle Half-pipes' or lift_name == 'Habitat Terrain Park':
+                if lift_name == 'Freestyle Half-pipes':
                     lift_name = 'Catskinner Chair'
                 if lift_name == 'Symphony Amphitheatre':
                     lift_name = 'Symphony Express'
                 if lift_name == 'The Peak':
                     lift_name = 'Peak Express'
+                if lift_name == 'Glacier':
+                    lift_name = 'Showcase T-Bar'
+                if lift_name == 'Habitat Terrain Park':
+                    lift_name = 'Emerald Express'
                 lift_obj = Lift.query.filter(Lift.name.contains(lift_name)).first()
 
                 # adding relationship
                 for run in skirun_list:
+                    skirun_name = run['Name']
+                    if '/' in skirun_name:
+                        skirun_name = skirun_name.replace('/', '-')
                     run_obj = Skirun.query.filter(Skirun.name == skirun_name).first()
                     lift_obj.skiruns.append(run_obj)
 

@@ -2,12 +2,14 @@
 {% block content %} 
 
 <h2 id='greeting'> Welcome Back {{ user.fname.title() }}!</h2> 
-
+<div class='container-fluid'>
+</dv>
 {% if cat_obj %}
-    Your personal ride report <br>
     {% for cat in cat_obj%}
 <div class='col-xs-4' style='padding:15px;'>
-        {% if cat.cat != 'groomer'%}
+<a href="/lifts">Find & rate a ski run</a> </br>
+        {% if cat.cat %}
+            Your personal ride report </br>
             <h5> {{ cat.cat.title() }} riding: </h5> 
             {% for run in user_runs%}
                 {% if cat.category_id == run.category_id %}
@@ -29,9 +31,11 @@
   </tr>
   <tr>
     <!-- This link is connecting to the /rating_id -->
+    {% if skirun_id %}
     <td> <a href="/{{ratings.skirun.name}}"> {{ ratings.skirun.name }} </a></td>
     <td> {{ ratings.rating }} </td>
     <td> {{ ratings.comment }} </td> 
+    {% endif %}
   </tr>
 </table>   
 </div>

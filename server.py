@@ -96,13 +96,6 @@ def add_info():
             db.session.add(new_cat)
         db.session.commit()
 
-        first = Rating(user_id=new_user.user_id,
-                              rating=5,
-                              skirun_id=1,
-                              comment='ex: Best run for a great view')
-        db.session.add(first)
-        db.session.commit()
-
         return redirect('/home')
 
 
@@ -185,7 +178,11 @@ def profile():
         runs = Skirun.query.all()
 
         # get the skirun_id on the ski run table that equals the skirun id on the ratings table
-        skirun_id = Skirun.query.filter(Skirun.skirun_id == ratings.skirun_id).first()
+        try:
+            skirun_id = Skirun.query.filter(Skirun.skirun_id == ratings.skirun_id).first()
+        except:
+            skirun_id = None
+
         user_skill = user.skills.level.title()
 
         whistler = []
@@ -198,24 +195,21 @@ def profile():
                 blackcomb.append(lift)
         mountains = [whistler, blackcomb]
 
-        # check to see if the user has categories
-        if user.categories:
-            cat_obj = user.categories
+        cat_obj = user.categories
 
-            # match the categories to the open skiruns
-            # user runs are lift object with skiruns attached
-            user_runs = []
-            for run in runs:
-                for cat in cat_obj:
-                    if run.category_id == cat.category_id and run.status:
-                        user_runs.append(run)
+        # match the categories to the open skiruns
+        # user runs are lift object with skiruns attached
+        user_runs = []
+        for run in runs:
+            for cat in cat_obj:
+                if run.category_id == cat.category_id and run.status:
+                    user_runs.append(run)
 
-            return render_template("profile.html", user=user, cat_obj=cat_obj,
-                                   user_runs=user_runs, user_skill=user_skill,
-                                   ratings=ratings, run=run, skirun_id=skirun_id,
-                                   mountains=mountains)
-        return render_template("profile.html", user=user, user_runs=user_runs,
-                               runs=runs, user_skill=user_skill, skirun_id=skirun_id)
+        return render_template("profile.html", user=user, cat_obj=cat_obj,
+                               user_runs=user_runs, user_skill=user_skill,
+                               ratings=ratings, run=run, skirun_id=skirun_id,
+                               mountains=mountains)
+
     else:
         flash("Please log in first!")
         return redirect("/")
