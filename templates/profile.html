@@ -4,22 +4,24 @@
 <h2 id='greeting'> Welcome Back {{ user.fname.title() }}!</h2> 
 <div class='container-fluid'>
 </dv>
-{% if cat_obj %}
-    {% for cat in cat_obj%}
-<div class='col-xs-4' style='padding:15px;'>
-<a href="/lifts">Find & rate a ski run</a> </br>
-        {% if cat.cat %}
-            Your personal ride report </br>
-            <h5> {{ cat.cat.title() }} riding: </h5> 
-            {% for run in user_runs%}
-                {% if cat.category_id == run.category_id %}
-                    {{ run.lifts[0].mountain }} | {{ run.name }}<br>
-                {% endif %}
-            {% endfor %}
+
+Your personal ride report </br>
+        <a href="/lifts">Find & rate a ski run</a> </br>
+
+{% for cats in cat_obj%}
+<div class='col-xs-4'>
+<h5> {{ cats.cat.title() }} riding: </h5> 
+    {% for run_obj in user_runs %}
+        {% if run_obj.lifts %}
+            {{ run_obj.lifts[0].mountain }} | {{ run_obj.name }} <br>
         {% endif %}
-</div>
     {% endfor %}
-{% endif %}
+</div>
+{% endfor %}
+
+
+
+
 
 
 <div id='user_ratings' class='col-xs-12'>

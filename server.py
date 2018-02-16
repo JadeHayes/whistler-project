@@ -200,10 +200,15 @@ def profile():
         # match the categories to the open skiruns
         # user runs are lift object with skiruns attached
         user_runs = []
+        groomers = []
         for run in runs:
             for cat in cat_obj:
-                if run.category_id == cat.category_id and run.status:
+                if cat.category_id == 2:
+                    groomers.append(run)
+                elif run.category_id == cat.category_id and run.status:
                     user_runs.append(run)
+        groomers = sample(groomers,  3)
+        [user_runs.append(groomer) for groomer in groomers]
 
         return render_template("profile.html", user=user, cat_obj=cat_obj,
                                user_runs=user_runs, user_skill=user_skill,
