@@ -8,6 +8,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 
 from model import connect_to_db, db, Category, Weather, Lift, Skirun, User, Rating, SkillLevel, CatUser
 from random import sample
+from server_function import create_my_flare_json
 
 app = Flask(__name__)
 
@@ -286,6 +287,14 @@ def show_trailmap():
     """ Display trailmap."""
 
     return render_template("trail_map.html")
+
+
+@app.route('/myflare.json')
+def create_my_flare():
+    """Returns json data for cicle packing route"""
+
+    master_dict = create_my_flare_json()
+    return jsonify(master_dict)
 
 ##############################################################################
 

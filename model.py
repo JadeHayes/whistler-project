@@ -194,6 +194,7 @@ class Rating(db.Model):
                 'rating': self.rating,
                 'comment': self.comment}
 
+
 class Weather(db.Model):
     """information about weather on Blackcomb & Whistler mountain """
 

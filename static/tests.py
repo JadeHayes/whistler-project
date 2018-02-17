@@ -2,6 +2,7 @@ import unittest
 import server.py
 from model import db, example_data, connect_to_db
 
+
  class FlaskTests(unittest.TestCase):
     """Tests for Whistler MTN site."""
 
@@ -13,7 +14,7 @@ from model import db, example_data, connect_to_db
         result = self.client.get("/")
         self.assertIn("Log-in", result.data)
 
-    def test_login(self):
+    def test_home(self):
         result = self.client.get("/home")
         self.assertIn("Daily Snowfall Accumulation", result.data)
 
@@ -23,12 +24,15 @@ from model import db, example_data, connect_to_db
 
     def test_rsvp(self):
         result = self.client.post("/register",
-                                  data={"name": "Jade",
-                                        "email": "jade.e.hayes@gmail.com"},
+                                  data={"fname": "Jaye",
+                                        "lname": "hayze"
+                                        "email": "jadeEhayes@gmail.com",
+                                        "password": "123",
+                                        "zipcode": 94610},
                                   follow_redirects=True)
 
 
-class PartyTestsDatabase(unittest.TestCase):
+class WhistlerTestsDatabase(unittest.TestCase):
     """Flask tests that use the database."""
 
     def setUp(self):
@@ -38,22 +42,18 @@ class PartyTestsDatabase(unittest.TestCase):
         app.config['TESTING'] = True
 
         # Connect to test database (uncomment when testing database)
-        # connect_to_db(app, "postgresql:///testdb")
+        connect_to_db(app, "postgresql:///whistler")
 
         # Create tables and add sample data (uncomment when testing database)
-        # db.create_all()
-        # example_data()
+        db.create_all()
+        example_data()
 
     def tearDown(self):
         """Do at end of every test."""
 
         # (uncomment when testing database)
-        # db.session.close()
-        # db.drop_all()
-
-    def test_games(self):
-        #FIXME: test that the games page displays the game from example_data()
-        print "FIXME"
+        db.session.close()
+        db.drop_all()
 
 
 if __name__ == "__main__":
