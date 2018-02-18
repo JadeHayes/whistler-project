@@ -153,14 +153,11 @@ def index():
 
 @app.route('/lifts')
 def show_lifts():
-    """Lifts & skiruns associated with"""
-    # If the user is in the session, show lifts.  If not, redirect to login
+    """ display D3 Data """
     if session.get('logged_in'):
-        lifts = Lift.query.all()
-        return render_template("lifts.html", lifts=lifts)
+        return render_template('myflare.html')
     else:
-        flash("Please log in first!")
-        return redirect("/")
+        return redirect('/')
 
 
 @app.route('/profile')
@@ -208,7 +205,8 @@ def profile():
                     groomers.append(run)
                 elif run.category_id == cat.category_id and run.status:
                     user_runs.append(run)
-        groomers = sample(groomers,  3)
+        if groomers:
+            groomers = sample(groomers,  3)
         [user_runs.append(groomer) for groomer in groomers]
 
         return render_template("profile.html", user=user, cat_obj=cat_obj,
@@ -232,7 +230,6 @@ def skiruns(name):
 
     # get the skirun object run
     skirun = Skirun.query.filter(Skirun.name == name).first()
-    # user_id = session.get('logged_in')
 
     return render_template("skirun_ratings.html",
                            rating=rating, skirun=skirun)

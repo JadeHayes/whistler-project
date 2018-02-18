@@ -12,14 +12,14 @@ Your personal ride report </br>
 <div class='col-xs-4'>
 <h5> {{ cats.cat.title() }} riding: </h5> 
     {% for run_obj in user_runs %}
+      {% if run_obj.category.cat == cats.cat %}
         {% if run_obj.lifts %}
             {{ run_obj.lifts[0].mountain }} | {{ run_obj.name }} <br>
         {% endif %}
+      {% endif %}
     {% endfor %}
 </div>
 {% endfor %}
-
-
 
 
 
