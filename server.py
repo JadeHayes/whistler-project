@@ -8,7 +8,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 
 from model import connect_to_db, db, Category, Weather, Lift, Skirun, User, Rating, SkillLevel, CatUser
 from random import sample
-from server_function import create_my_flare_json
+from server_function import blackcomb_flare_json, whistler_flare_json
 
 app = Flask(__name__)
 
@@ -255,9 +255,9 @@ def add_rating():
         db.session.commit()
     else:
         rating = Rating(skirun_id=skirun_id,
-                            user_id=user_id,
-                            rating=new_score,
-                            comment=description)
+                        user_id=user_id,
+                        rating=new_score,
+                        comment=description)
         db.session.add(rating)
         db.session.commit()
 
@@ -287,11 +287,20 @@ def show_trailmap():
 
 
 @app.route('/myflare.json')
-def create_my_flare():
+def create_blackcomb_flare():
     """Returns json data for cicle packing route"""
 
-    master_dict = create_my_flare_json()
-    return jsonify(master_dict)
+    bl_master_dict = blackcomb_flare_json()
+    return jsonify(bl_master_dict)
+
+
+@app.route('/whistler.json')
+def create_whistler_flare():
+    """Returns json data for cicle packing route"""
+
+    wh_master_dict = whistler_flare_json()
+    return jsonify(wh_master_dict)
+
 
 ##############################################################################
 
