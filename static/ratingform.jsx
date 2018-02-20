@@ -15,8 +15,7 @@ class RatingForm extends React.Component {
         <div>
           { message }
           <form onSubmit={this.props.addRating}>
-            <div className='col-xs-6'>
-            Rate this run: <br />
+            <div className='container'>
              <input type="radio" id="1" name="rating" value="1" required />
                 <label htmlFor="1">1</label>
 
@@ -32,14 +31,13 @@ class RatingForm extends React.Component {
             <input type="radio" id="5" name="rating" value="5" required />
                 <label htmlFor="5">5</label>
             </div>
-            <div className='col-xs-6'>
-              Description:
-              <br />
-              <textarea className='input-lg resize' id='description' name='description' required>
-                This run is awesome!
-              </textarea>
+
+
+              <div className="form-group">
+                  <label for="comment">Comment:</label>
+                  <textarea className="form-control" rows="5" id="description"></textarea>
+              </div>
               <input className='btn' type='submit' />
-            </div>
           </form>
         </div>);
     

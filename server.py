@@ -8,7 +8,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 
 from model import connect_to_db, db, Category, Weather, Lift, Skirun, User, Rating, SkillLevel, CatUser
 from random import sample
-from server_function import blackcomb_flare_json, whistler_flare_json
+from server_function import blackcomb_flare_json, whistler_flare_json, get_tweets
 
 app = Flask(__name__)
 
@@ -142,10 +142,12 @@ def index():
         groomers = Skirun.query.filter(Skirun.category_id == 2 and Skirun.groomed == True and Skirun.status == True).all()
         groomed_runs = sample(groomers,  3)
 
+        tweets = get_tweets()
+
         return render_template("homepage.html", weather_obj=weather_obj,
                                categories=category_objs, skiruns=skirun_objs,
                                total_snow=total_snow, weather=weather, daily_cat=daily_cat.title(),
-                               run_objs=run_objs, groomed_runs=groomed_runs, pipe=pipe)
+                               run_objs=run_objs, groomed_runs=groomed_runs, pipe=pipe, tweets=tweets)
     else:
         flash("Please log in first!")
         return redirect("/")

@@ -1,40 +1,89 @@
 {% extends "base.html" %}
 {% block content %} 
+<!-- custom scrollbar CSS -->
+<link rel="stylesheet" href="http://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.min.css">
+<!-- jQuery lib -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<!-- custom scrollbar plugin script -->
+<script src="http://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
 
-<div class="container-fluid">
-<h2> Whistler MTN </h2>
-    <hr>
-        <h4>A quick MTN report</h4>
-            <div id='ride_choice'>
-                <p> Best spot to ride for todays conditions:
-                 {{ daily_cat }} </p>
-            </div>
-        <b> Daily Snowfall Accumulation: </b> {{ weather.daily_snowfall }}" </br>
-        <b> 24 hour snowfall: </b> {{ weather.overnight_snowfall }} " </br>
-        <b> Wind: </b> {{ weather.wind_forcast }}
+<script src="static/style.css"></script>
 
-<div id='halfpipe'> 
-    {% if pipe.groomed %}
-        18' Half Pipe: Freshly Groomed
-    {% endif %}
-</div>
-<div id='skiruns'>
-    <h4> {{ daily_cat }}  Runs: </h4>
-        {% for skirun in run_objs %}
-                {{ skirun.name}} | {{ skirun.level}} <br>
-        {% endfor %}
-</div> <br>
+<script type="text/javascript">
+twttr.widgets.createTimeline(
+  {
+    sourceType: "twitter-timeline",
+    ownerScreenName: "Whistler Blackcomb",
+    slug: "WhistlerBlckcmb"
+  },
+  document.getElementById("twitter-list")
+);
 
-<div>
-    <b>Groomers Choice:</b>
-        {% for groomer in groomed_runs %} <br>
-            {{ groomer.name }} | {{ groomer.level}}
-        {% endfor %}
-</div> <br>
+</script>
 
-    <div id='forcast'>
-        <b> Tomorrow's Forcast </b>
-         {{ weather.snow_forcast}} </div></br>
+<div class="container updates col-xs-6" style='text-align:center';>
+    <h2> Whistler MTN </h2>
+        <hr>
+            <h4>A quick MTN report</h4>
+                <div id='ride_choice'>
+                    <p> Best spot to ride for todays conditions:
+                     {{ daily_cat }} </p>
+                </div>
+            <b> Daily Snowfall Accumulation: </b> {{ weather.daily_snowfall }}" </br>
+            <b> 24 hour snowfall: </b> {{ weather.overnight_snowfall }} " </br>
+            <b> Wind: </b> {{ weather.wind_forcast }}
+
+    <div id='halfpipe'> 
+        {% if pipe.groomed %}
+            18' Half Pipe: Freshly Groomed
+        {% endif %}
+    </div>
+    <br>
+    <div id='skiruns'>
+        <h4> {{ daily_cat }}  Runs: </h4>
+            {% for skirun in run_objs %}
+                    {{ skirun.name}} | {{ skirun.level}} <br>
+            {% endfor %}
+    </div> <br>
+
+    <div>
+        <h4>Groomers Choice:</h4>
+            {% for groomer in groomed_runs %} <br>
+                {{ groomer.name }} | {{ groomer.level}}
+            {% endfor %}
+    </div> <br>
+
+        <div id='forcast'>
+            <h4> Tomorrow's Forcast </h4>
+             {{ weather.snow_forcast}}</br>
     </div>
 </div>   
+
+
+
+<div class="inline-block col-xs-6 twitter-widget-holder">
+<a class="twitter-timeline twitter-widget-holder"
+  href="https://twitter.com/WhistlerBlckcmb" height="600" data-chrome="nofooter noborders"></a>
+Tweets from Whistler Blackcomb
+
+<a class="twitter-list twitter-widget-holder" href="https://twitter.com/WhistlerBlckcmb"></a> 
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</a>
+</div>
+
+
+<script>
+  (function($){
+    $(window).load(function(){
+      /* initialize scrollbar */
+      $("#twitter-widget-holder").mCustomScrollbar({
+        theme:"dark-3",
+        scrollButtons:{enable:true}
+      });
+      /* insert twitter widget js in window load fn */
+      !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+    });
+  })(jQuery);
+</script>
+
 {% endblock %}
