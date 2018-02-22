@@ -1,7 +1,7 @@
 # Whistler-project
-This is an app for people who are new to whislter and would like to know which areas of the resort they may like to ski/ride. 
-The app gathers data from the whistler website and gives riders suggested areas of the mountian to ski depending on
-the users riding preferences, the weather and the grooming report.  It also connects whistler's twitter feed and a live cam feed of the mountain so users have real time mountain updates.
+For people who are new to whislter & want suggestions about where on the mountain to explore first. 
+The app gathers data from whistler's website and gives users suggested areas of the mountian to ski depending on
+the their riding preferences, weather conditions and the daily grooming report.  It also connects whistler's twitter feed and a live cam of the mountain.
 
 ## Getting Started
 This is a project for a class I am taking that ends in March 2018.  
