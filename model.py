@@ -50,10 +50,42 @@ class Lift(db.Model):
    # Defining the realtionship between the lift class and the skirun table
     skiruns = db.relationship("Skirun", secondary="skiruns_lifts")
 
+       # Defining the relationship between the food class and the lift table
+    foods = db.relationship("Food", secondary="foods_lifts")
+
     def __repr__(self):
         """ Provide helpful information about each lift"""
 
         return "<name={} lift_id={}>".format(self.name, self.lift_id)
+
+
+class FoodLift(db.Model):
+    """Associative table for the relationships of lifts and food """
+
+    __tablename__ = "foods_lifts"
+
+    FL_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    lift_id = db.Column(db.Integer,
+                        db.ForeignKey('lifts.lift_id'),
+                        nullable=False)
+    food_id = db.Column(db.Integer,
+                        db.ForeignKey('foods.food_id'),
+                        nullable=False)
+
+
+class Food(db.Model):
+    """Information about food options on the mountain """
+
+    __tablename__ = "foods"
+
+    food_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    name = db.Column(db.String(150))
+    description = db.Column(db.String(250))
+    # if food location at base TRUE if at summit FALSE
+    location = db.Column(db.Boolean)
+
+    # Defining the relationship between the food class and the lift table
+    lifts = db.relationship("Lift", secondary="foods_lifts")
 
 
 class SkirunLift(db.Model):

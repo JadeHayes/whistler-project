@@ -2,8 +2,9 @@ import scrapy
 from scrapy.selector import Selector
 import requests
 import json
-from model import db, connect_to_db, Skirun, Lift, Category, SkirunLift, User, Rating, SkillLevel, CatUser
+from model import db, connect_to_db, Skirun, Lift, Category, SkirunLift, User, Rating, SkillLevel, CatUser, Food, FoodLift
 from flask import Flask
+from seed_helper import food_parse
 import os
 import random
 
@@ -22,9 +23,9 @@ class WhistlerSpider(scrapy.Spider):
     # Will parse through the page
 
     def parse(self, response):
-        os.system('dropdb whistler')
-        os.system('createdb whistler')
-        db.create_all()
+        # os.system('dropdb whistler')
+        # os.system('createdb whistler')
+        # db.create_all()
         # r = requests.get('https://www.whistlerblackcomb.com/the-mountain/mountain-conditions/terrain-and-lift-status.aspx')
         skiruns_str = Selector(response=response).xpath('//script/text()').extract()[10]
         skiruns = json.loads(skiruns_str.split("=")[1].split(";")[0])
@@ -183,4 +184,24 @@ class WhistlerSpider(scrapy.Spider):
             db.session.add(comments)
 
         # commit work to the db
+        db.session.commit()
+
+        restaurants = open("../../../static/food.txt")
+
+        for restaurant in restaurants:
+            restaurant = restaurant.strip()
+            restaurant_data = restaurant.split('|')
+            name = restaurant_data[0].title()
+            description = restaurant_data[1][:200]
+            location = restaurant_data[2]
+            lift_id = int(restaurant_data[4])
+
+            # import pdb; pdb.set_trace()
+            lift_obj = Lift.query.filter(Lift.lift_id == lift_id).first()
+
+            new_restaurant = Food(name=name, description=description, location=location)
+            db.session.add(new_restaurant)
+            # adding relationship
+            new_restaurant.lifts.append(lift_obj)
+
         db.session.commit()

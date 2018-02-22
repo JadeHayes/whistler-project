@@ -308,7 +308,13 @@ def display_livecam():
 
     return render_template("livecam.html")
 
+@app.route('/lifts')
+def display_lifts():
+    """Shows lifts and the runs they connect to organized by cat & level """
 
+    pass
+
+    
 ##############################################################################
 
 if __name__ == "__main__":
