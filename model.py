@@ -46,6 +46,9 @@ class Lift(db.Model):
     name = db.Column(db.String(150))
     status = db.Column(db.String(150))
     mountain = db.Column(db.String(200))
+    # food_id = db.Column(db.Integer,
+    #                     db.ForeignKey('foods.food_id'),
+    #                     nullable=False)
 
    # Defining the realtionship between the lift class and the skirun table
     skiruns = db.relationship("Skirun", secondary="skiruns_lifts")
@@ -86,6 +89,11 @@ class Food(db.Model):
 
     # Defining the relationship between the food class and the lift table
     lifts = db.relationship("Lift", secondary="foods_lifts")
+
+    def __repr__(self):
+        """ Provide helpful information about each restaurant"""
+
+        return "< Restaurant name={} food_id={}>".format(self.name, self.food_id)
 
 
 class SkirunLift(db.Model):

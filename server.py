@@ -6,7 +6,7 @@ from flask import (Flask, render_template, redirect, request, flash,
                    session, jsonify)
 from flask_debugtoolbar import DebugToolbarExtension
 
-from model import connect_to_db, db, Category, Weather, Lift, Skirun, User, Rating, SkillLevel, CatUser
+from model import connect_to_db, db, Category, Weather, Lift, Skirun, User, Rating, SkillLevel, CatUser, Food, FoodLift
 from random import sample
 from server_function import blackcomb_flare_json, whistler_flare_json
 
@@ -218,6 +218,7 @@ def profile():
         flash("Please log in first!")
         return redirect("/")
 
+
 @app.route("/favicon.ico")
 def do_nothing():
     return "nope"
@@ -226,13 +227,34 @@ def do_nothing():
 @app.route('/<name>')
 def skiruns(name):
     """Display skirun Ratings."""
-    rating = Rating.query.join(Skirun).filter(Skirun.name == name).first()
+    # skiruns = '''Select name FROM Skirun''' in SQL alchemy...
+    skiruns = []
+    lifts = []
 
-    # get the skirun object run
-    skirun = Skirun.query.filter(Skirun.name == name).first()
+    skirun_objs = Skirun.query.all()
+    # import pdb; pdb.set_trace()
+    for skirun in skirun_objs:
+        skiruns.append(skirun.name)
 
-    return render_template("skirun_ratings.html",
-                           rating=rating, skirun=skirun)
+    lift_objs = Lift.query.all()
+    for lift in lift_objs:
+        lifts.append(lift.name)
+
+    if name in skiruns:
+        rating = Rating.query.join(Skirun).filter(Skirun.name == name).first()
+
+        # get the skirun object run
+        skirun = Skirun.query.filter(Skirun.name == name).first()
+
+        return render_template("skirun_ratings.html",
+                               rating=rating, skirun=skirun)
+    elif name in lifts:
+        # get the lift object
+        lift = Lift.query.filter(Lift.name == name).first()
+
+        return render_template('lifts.html', lift=lift)
+    else:
+        redirect('/lifts')
 
 
 @app.route('/add-rating.json', methods=['POST'])
@@ -279,6 +301,19 @@ def get_ratings():
     return jsonify({'ratings': ratings})
 
 
+@app.route('/get-food.json')
+def get_restaurants():
+    """ show lifts & their food options"""
+
+    lift_id = request.args.get('lift_id')
+    lift = Lift.query.get(lift_id)
+
+    #  list of food objects changed into a dictionary so we can jsonify
+    restaurants = [food.to_dict() for food in lift.foods]
+    # import pdb; pdb.set_trace()
+    return jsonify(restaurants)
+
+
 @app.route('/trailmap')
 def show_trailmap():
     """ Display trailmap."""
@@ -288,7 +323,7 @@ def show_trailmap():
 
 @app.route('/myflare.json')
 def create_blackcomb_flare():
-    """Returns json data for cicle packing route"""
+    """Returns json data for tree packing route"""
 
     bl_master_dict = blackcomb_flare_json()
     return jsonify(bl_master_dict)
@@ -296,7 +331,7 @@ def create_blackcomb_flare():
 
 @app.route('/whistler.json')
 def create_whistler_flare():
-    """Returns json data for cicle packing route"""
+    """Returns json data for tree packing route"""
 
     wh_master_dict = whistler_flare_json()
     return jsonify(wh_master_dict)
@@ -314,7 +349,6 @@ def display_lifts():
 
     pass
 
-    
 ##############################################################################
 
 if __name__ == "__main__":
