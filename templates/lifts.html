@@ -1,15 +1,18 @@
 {% extends 'base.html' %}
 {% block content %} 
+<div id="root"></div>
+
 
 <!-- react -->
 <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
 
-<!-- needs to be before -->
+<!-- needs to be before text -->
 <script src="http://unpkg.com/babel-standalone"></script>
 
 <h2> {{lift.name}} </h2>
-<div id="root"></div>
+
+
 
 <div class='container'>
     {% if lift.skiruns %}
@@ -21,20 +24,32 @@
     {% endif %}
 </div>
 
+<script type="text/javascript">
+    let foodName;
+    let foodLocation;
+</script>
+
 {% if lift.foods %}
 <b> Restaurants </b>
     {% for food in lift.foods %}
 <div class='col-xs-6 inline'>
-        {{ food.name }} | 
-    {% if food.location %}
-        located at the base of the lift
-    {% else %}
-        located at the lifts summit
-    {% endif %}
-</div>
+    <script type="text/javascript">
+        foodName = "{{ food.name }}" 
+        foodLocation = {{ food.location|tojson }}
+        {% if food.location %}
+            "located at the base of the lift"
+        {% else %}
+            "located at the lifts summit"
+        {% endif %}
+</script>
         {% endfor %}
     {% endif %}
 </div>
+</div>
+
+<script type="text/javascript">
+    let liftName = {{ lift.name }};
+</script>
 
 <script type="text/javascript">
   let liftId = {{ lift.lift_id }};
@@ -51,5 +66,4 @@
     {% endif %}
 </script>
 <script src="/static/LiftParent.jsx" type="text/jsx"></script>
-
 {% endblock %}

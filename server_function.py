@@ -98,6 +98,8 @@ def whistler_flare_json():
     return w_master_dict
 
 
+def create_dict():
+    """creates a dictionary object"""
 
 
 

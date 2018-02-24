@@ -90,6 +90,14 @@ class Food(db.Model):
     # Defining the relationship between the food class and the lift table
     lifts = db.relationship("Lift", secondary="foods_lifts")
 
+    def to_dict(self):
+        """ returns the rating in dictionary form"""
+
+        return {'food_id': self.food_id,
+                'name': self.name,
+                'description': self.description,
+                'location': self.location}
+
     def __repr__(self):
         """ Provide helpful information about each restaurant"""
 

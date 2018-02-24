@@ -252,6 +252,9 @@ def skiruns(name):
         # get the lift object
         lift = Lift.query.filter(Lift.name == name).first()
 
+        # get all of the food objects related to the lift object
+        # foods = Food.query.join(FoodLift).join(Lift).filter(Lift.name == name).all()
+
         return render_template('lifts.html', lift=lift)
     else:
         redirect('/lifts')
@@ -301,17 +304,22 @@ def get_ratings():
     return jsonify({'ratings': ratings})
 
 
-@app.route('/get-food.json')
-def get_restaurants():
+@app.route('/get-lift-info.json')
+def get_lift_info():
     """ show lifts & their food options"""
 
     lift_id = request.args.get('lift_id')
-    lift = Lift.query.get(lift_id)
+    lift = Lift.query.filter(Lift.lift_id == lift_id).first()
 
-    #  list of food objects changed into a dictionary so we can jsonify
+    # restaurants = Food.query.join(FoodLift).join(Lift).filter(Lift.lift_id == lift_id).all()
     restaurants = [food.to_dict() for food in lift.foods]
+
     # import pdb; pdb.set_trace()
-    return jsonify(restaurants)
+
+    if restaurants:
+        return jsonify(restaurants)
+    else:
+        return jsonify("No food")
 
 
 @app.route('/trailmap')
