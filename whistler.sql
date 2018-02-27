@@ -708,6 +708,9 @@ COPY catusers (catuser_id, category_id, user_id) FROM stdin;
 186	3	99
 187	1	100
 188	4	100
+189	1	101
+190	4	101
+191	3	101
 \.
 
 
@@ -715,7 +718,7 @@ COPY catusers (catuser_id, category_id, user_id) FROM stdin;
 -- Name: catusers_catuser_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
 --
 
-SELECT pg_catalog.setval('catusers_catuser_id_seq', 188, true);
+SELECT pg_catalog.setval('catusers_catuser_id_seq', 191, true);
 
 
 --
@@ -1006,6 +1009,11 @@ COPY ratings (rating_id, rating, comment, skirun_id, user_id) FROM stdin;
 167	5	\nRent a Thule box if you can. Will give you so much more space. \n	47	54
 168	4	\nI can think of two options. \n\nSCS shopping mall with stores like Intersport, Hervis, Blue Tomato, XXL Sports..\n\nhttp://scs.at/en\n\n\nor Sport	31	12
 169	4	\n\nYou can also hire equipment there.\n\nIf you're looking for used equipment check out [willhaben](http://www.willhaben.at).	89	18
+170	4	Hi Rachel!	7	101
+171	5	sooo coool	20	101
+172	5	yayyyyyyyyyy	3	101
+173	5	yayyyyy	9	101
+174	5	Hi!!!	12	101
 \.
 
 
@@ -1013,7 +1021,7 @@ COPY ratings (rating_id, rating, comment, skirun_id, user_id) FROM stdin;
 -- Name: ratings_rating_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
 --
 
-SELECT pg_catalog.setval('ratings_rating_id_seq', 169, true);
+SELECT pg_catalog.setval('ratings_rating_id_seq', 174, true);
 
 
 --
@@ -1844,6 +1852,7 @@ COPY users (user_id, fname, lname, email, zipcode, password, level_id) FROM stdi
 98	Barrett	Swanson	lorem@sempereratin.org	110903	123	3
 99	Daryl	Ramos	vulputate.nisi.sem@consectetuereuismod.edu	ZB5 4PO	123	1
 100	Cecilia	Murphy	Duis.mi@feugiatplacerat.com	0135	123	2
+101	jade	hayes	Jade.e.Hayes@gmail.com	94610	123	3
 \.
 
 
@@ -1851,7 +1860,7 @@ COPY users (user_id, fname, lname, email, zipcode, password, level_id) FROM stdi
 -- Name: users_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
 --
 
-SELECT pg_catalog.setval('users_user_id_seq', 100, true);
+SELECT pg_catalog.setval('users_user_id_seq', 101, true);
 
 
 --

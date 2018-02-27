@@ -1,50 +1,104 @@
 {% extends 'base.html' %}
 {% block content %} 
+<style type="text/css">
+.yelp-photo {
+    height: 30em;
+    width: 42.75em;
+}
+</style>
+
 <h2> {{lift.name}} </h2>
-
-<div id="root"> <!-- component will go in this div --> </div>
-
-
-<!-- react -->
-<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
-<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-
-<!-- needs to be before  -->
-<script src="http://unpkg.com/babel-standalone"></script>
-
-
-{% if lift.skiruns %}
-<div class='col-xs-6 inline container'>
-<b>Skiruns</b> </br>
-    {% for run in lift.skiruns %}
-     {{ run.name }} | {{ run.level }} </br>
-     {% endfor %}
+<div>
+<img src="https://s-media-cache-ak0.pinimg.com/originals/5f/23/d4/5f23d47df4ee88438ef9b5e7f2701481.jpg" class='container-fluid'/>
 </div>
-    {% endif %}
 
-<script type="text/javascript">
-    let foodName;
-    let foodLocation;
-    let liftName = "{{ lift.name }}";
-</script>
+<html lang="en">
+<head>
+  <title>Bootstrap Modal</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
 
-<script type="text/javascript">
-  let liftId = {{ lift.lift_id }};
-    {% if 'logged_in' in session %}
-        let userLoggedIn = true;
-    {% else %}
-        let userLoggedIn = false;
-    {% endif %}
+<div class="container">
+{% if yelp_infos %}
+  <h2>Restaurants</h2>
+  <!-- Trigger the modal with a button -->
+    {% for food in yelp_infos %}
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modal-{{food.food_id}}">{{food.name}}
+     </button>
 
-    {% if lift.foods %}
-        let foodExist = true;
-    {% else %}
-        let foodExist = false;
-    {% endif %}
-</script>
+  <!-- Modal -->
+  <div class="modal fade" id="modal-{{food.food_id}}" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">{{food.name}}</h4>
+        </div>
+
+        <div>
+            <img class="yelp-photo"src="{{ yelp_infos[food]['photos'][0] }}"/>
+        </div>
+
+        <div>
+            Average Rating {{ yelp_infos[food]['rating'] }}/5
+        </div>
+
+        <div class="modal-body">
+          <p>{{food.description}}</p>
+          {{food.name}} <a href="{{ yelp_infos[food]['url'] }}"> reviews</a>
+        </div>
 
 
-<script src="/static/restaurants/foodchild.jsx" type="text/jsx"></script>
-<script src="/static/restaurants/modal.jsx" type="text/jsx"></script>
-<script src="/static/restaurants/liftparent.jsx" type="text/jsx"></script>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+</body>
+</html>
+
+
+<b>Skiruns</b> </br>
+{% if green %}
+<div class='green col-xs-6 inline container'>
+<b>Beginner level skiruns</b></br>
+{% for run in green %}
+    <a href="/{{ run.name }}">{{ run.name }}</a></br>
+    {% endfor %}
+</div>
+{% endif %}
+
+
+{% if blue %}
+<div class='blue col-xs-6 inline container'>
+<b>Intermediate level skiruns</b></br>
+{% for run in blue %}
+    <a href="/{{ run.name }}">{{ run.name }}</a></br>
+    {% endfor %}
+</div>
+{% endif %}
+
+
+{% if black %}
+<div class='black col-xs-6 inline container'>
+<b>Advanced level skiruns</b></br>
+{% for run in black %}
+    <a href="/{{ run.name }}">{{ run.name }}</a></br>
+    {% endfor %}
+</div>
+{% endif %}
+
+
 {% endblock %}

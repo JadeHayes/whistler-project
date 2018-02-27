@@ -86,6 +86,7 @@ class Food(db.Model):
     description = db.Column(db.String(250))
     # if food location at base TRUE if at summit FALSE
     location = db.Column(db.Boolean)
+    yelp_id = db.Column(db.String(250))
 
     # Defining the relationship between the food class and the lift table
     lifts = db.relationship("Lift", secondary="foods_lifts")

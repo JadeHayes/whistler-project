@@ -4,7 +4,7 @@ import requests
 import json
 from model import db, connect_to_db, Skirun, Lift, Category, SkirunLift, User, Rating, SkillLevel, CatUser, Food, FoodLift
 from flask import Flask
-from seed_helper import food_parse
+# from seed_helper import food_parse
 import os
 import random
 
@@ -134,7 +134,7 @@ class WhistlerSpider(scrapy.Spider):
             db.session.commit()
 
         # Add users to our db
-        users = open("../../../static/users.json").read()
+        users = open("../../../static/json/users.json").read()
         users = json.loads(users)
         for user in users:
             fname = user['fname']
@@ -166,7 +166,7 @@ class WhistlerSpider(scrapy.Spider):
                 catusr.users.append(user_obj)
             db.session.commit()
 
-        ratings = open("../../../static/rating.txt").read()
+        ratings = open("../../../static/json/rating.txt").read()
         ratings = ratings.strip()
         ratings = ratings.split('|')
 
@@ -186,7 +186,7 @@ class WhistlerSpider(scrapy.Spider):
         # commit work to the db
         db.session.commit()
 
-        restaurants = open("../../../static/food.txt")
+        restaurants = open("../../../static/json/food.txt")
 
         for restaurant in restaurants:
             restaurant = restaurant.strip()
@@ -195,11 +195,12 @@ class WhistlerSpider(scrapy.Spider):
             description = restaurant_data[1][:200]
             location = restaurant_data[2]
             lift_id = int(restaurant_data[4])
+            yelp_id = restaurant_data[5]
 
             # import pdb; pdb.set_trace()
             lift_obj = Lift.query.filter(Lift.lift_id == lift_id).first()
 
-            new_restaurant = Food(name=name, description=description, location=location)
+            new_restaurant = Food(name=name, description=description, location=location, yelp_id=yelp_id)
             db.session.add(new_restaurant)
             # adding relationship
             new_restaurant.lifts.append(lift_obj)

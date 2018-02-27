@@ -6,9 +6,20 @@ from flask import (Flask, render_template, redirect, request, flash,
                    session, jsonify)
 from flask_debugtoolbar import DebugToolbarExtension
 
-from model import connect_to_db, db, Category, Weather, Lift, Skirun, User, Rating, SkillLevel, CatUser, Food, FoodLift
+from model import connect_to_db, db, Category, Weather, Lift, Skirun, User, Rating, SkillLevel, CatUser, Food, FoodLift, SkirunLift
 from random import sample
 from server_function import blackcomb_flare_json, whistler_flare_json
+import yelp
+import os
+
+##############################################################################
+
+YELP_API_KEY= os.environ.get("YELP_API_KEY")
+
+API_HOST = 'https://api.yelp.com'
+SEARCH_PATH = '/v3/businesses/search'
+BUSINESS_PATH = '/v3/businesses/'
+
 
 app = Flask(__name__)
 
@@ -252,10 +263,36 @@ def skiruns(name):
         # get the lift object
         lift = Lift.query.filter(Lift.name == name).first()
 
-        # get all of the food objects related to the lift object
-        # foods = Food.query.join(FoodLift).join(Lift).filter(Lift.name == name).all()
+        # get skiruns connected to the lift 
+        skiruns = Skirun.query.join(SkirunLift).join(Lift).filter(Lift.name == name).all()
 
-        return render_template('lifts.html', lift=lift)
+        # get all of the food objects related to the lift object
+        foods = Food.query.join(FoodLift).join(Lift).filter(Lift.name == name).all()
+
+        yelp_infos = {}
+
+        green = []
+        blue = []
+        black = []
+
+        # separate out runs by levels
+        for run in skiruns:
+            if run.level == 'Green':
+                green.append(run)
+            elif run.level == 'Blue':
+                blue.append(run)
+            elif run.level == 'Black':
+                black.append(run)
+        # import pdb; pdb.set_trace()
+
+        # Make yelp requests using yelp API to access bubsiness info
+        for restaurant in foods:
+            yelp_req = yelp.get_business(YELP_API_KEY, restaurant.yelp_id)
+            yelp_infos[restaurant] = yelp_req
+
+        return render_template('lifts.html', lift=lift, foods=foods,
+                                yelp_infos=yelp_infos, green=green,
+                                blue=blue, black=black)
     else:
         redirect('/lifts')
 
