@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %} 
 
-<h2 id='greeting'> Welcome Back {{ user.fname.title() }}!</h2> 
+<h2 id='greeting'> Welcome Back {{ user.fname.title() }} {{ user.lname.title() }}!</h2> 
 <div class='container-fluid'>
 </dv>
 
@@ -14,7 +14,7 @@ Your personal ride report </br>
     {% for run_obj in user_runs %}
       {% if run_obj.category.cat == cats.cat %}
         {% if run_obj.lifts %}
-            {{ run_obj.lifts[0].mountain }} | {{ run_obj.name }} <br>
+            {{ run_obj.lifts[0].mountain }} | <a href="/{{ run_obj.name }}">{{ run_obj.name }}</a> <br>
         {% endif %}
       {% endif %}
     {% endfor %}
@@ -33,10 +33,15 @@ Your personal ride report </br>
   </tr>
   <tr>
     <!-- This link is connecting to the /rating_id -->
-    {% if skirun_id %}
-    <td> <a href="/{{ratings.skirun.name}}"> {{ ratings.skirun.name }} </a></td>
-    <td> {{ ratings.rating }} </td>
-    <td> {{ ratings.comment }} </td> 
+    {% if ratings %}
+    
+    {% for rating in ratings %}
+    <tr>
+    <td> <a href="/{{rating.skirun.name}}"> {{ rating.skirun.name }} </a></td>
+    <td> {{ rating.rating }} </td>
+    <td> {{ rating.comment }} </td> 
+  </tr>
+    {% endfor %}
     {% endif %}
   </tr>
 </table>   

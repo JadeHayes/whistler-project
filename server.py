@@ -131,6 +131,7 @@ def index():
         # Grab the weather object so you can pass it through jinja
         for weather in weather_obj:
             total_snow = float(weather.daily_snowfall) + float(weather.overnight_snowfall)
+            total_snow = round(total_snow, 2)
             # Calculate ideal riding category based on the weather
             if total_snow >= 6 and weather.wind_forcast == 'Calm':
                 daily_cat = 'bowl'
@@ -180,8 +181,8 @@ def profile():
         user = User.query.filter(User.user_id == userid).first()
 
         # grab all of the users ratings
-        ratings = Rating.query.filter(Rating.user_id == userid).first()
-
+        ratings = Rating.query.filter(Rating.user_id == userid).all()
+        # import pdb; pdb.set_trace()
         # query all the lift and runs obj
         lifts = Lift.query.all()
         runs = Skirun.query.all()
@@ -281,9 +282,8 @@ def skiruns(name):
                 green.append(run)
             elif run.level == 'Blue':
                 blue.append(run)
-            elif run.level == 'Black':
+            else:
                 black.append(run)
-        # import pdb; pdb.set_trace()
 
         # Make yelp requests using yelp API to access bubsiness info
         for restaurant in foods:
@@ -388,11 +388,39 @@ def display_livecam():
 
     return render_template("livecam.html")
 
-@app.route('/lifts')
-def display_lifts():
-    """Shows lifts and the runs they connect to organized by cat & level """
 
-    pass
+@app.route('/lifts_search.json')
+def json_lifts():
+    """returns json and lifts jsonified """
+
+
+    lift_names = []
+
+    # query db for  lifts objs, loop though and append
+    # name of the lift to a list
+
+    lift_objs = Lift.query.all()
+    for lname in lift_objs:
+        lift_names.append({'name': lname.name})
+
+    # Save the list in dictionary format & return jsonified
+
+    return jsonify(lift_names)
+
+
+@app.route('/skiruns_search.json')
+def json_skiruns():
+    """returns json and skiruns jsonified """
+
+    skirun_names = []
+
+    # query db for skirun & lifts objs, loop though and append
+    # name of the skirun/lift to a list
+    skirun_objs = Skirun.query.all()
+    for sname in skirun_objs:
+        skirun_names.append({'name': sname.name})
+    skirun_names = skirun_names.rstrip()
+    return jsonify(skirun_names)
 
 ##############################################################################
 

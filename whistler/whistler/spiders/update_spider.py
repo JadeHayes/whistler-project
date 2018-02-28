@@ -30,7 +30,7 @@ class WhistlerSpider(scrapy.Spider):
 
     def parse(self, response):
         """ Parsing through our data returned from webscraping """
-        skiruns_str = Selector(response=response).xpath('//script/text()').extract()[10]
+        skiruns_str = Selector(response=response).xpath('//script/text()').extract()[11]
         skiruns = json.loads(skiruns_str.split("=")[1].split(";")[0])
         lifts = skiruns['Lifts']
 
@@ -61,6 +61,7 @@ class WhistlerSpider(scrapy.Spider):
                 # import pdb; pdb.set_trace()
                 skirun2 = Skirun.query.filter(Skirun.name == skirun_name).first()
 
+                # import pdb; pdb.set_trace()
                 skirun2.status = skirun_status
                 skirun2.groomed = skirun_groomed
 
