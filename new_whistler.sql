@@ -101,6 +101,40 @@ ALTER SEQUENCE catusers_catuser_id_seq OWNED BY catusers.catuser_id;
 
 
 --
+-- Name: faves; Type: TABLE; Schema: public; Owner: vagrant
+--
+
+CREATE TABLE faves (
+    fave_id integer NOT NULL,
+    skirun_id integer NOT NULL,
+    user_id integer NOT NULL
+);
+
+
+ALTER TABLE faves OWNER TO vagrant;
+
+--
+-- Name: faves_fave_id_seq; Type: SEQUENCE; Schema: public; Owner: vagrant
+--
+
+CREATE SEQUENCE faves_fave_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE faves_fave_id_seq OWNER TO vagrant;
+
+--
+-- Name: faves_fave_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: vagrant
+--
+
+ALTER SEQUENCE faves_fave_id_seq OWNED BY faves.fave_id;
+
+
+--
 -- Name: foods; Type: TABLE; Schema: public; Owner: vagrant
 --
 
@@ -108,7 +142,8 @@ CREATE TABLE foods (
     food_id integer NOT NULL,
     name character varying(150),
     description character varying(250),
-    location boolean
+    location boolean,
+    yelp_id character varying(250)
 );
 
 
@@ -434,6 +469,13 @@ ALTER TABLE ONLY catusers ALTER COLUMN catuser_id SET DEFAULT nextval('catusers_
 
 
 --
+-- Name: fave_id; Type: DEFAULT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY faves ALTER COLUMN fave_id SET DEFAULT nextval('faves_fave_id_seq'::regclass);
+
+
+--
 -- Name: food_id; Type: DEFAULT; Schema: public; Owner: vagrant
 --
 
@@ -722,31 +764,43 @@ SELECT pg_catalog.setval('catusers_catuser_id_seq', 191, true);
 
 
 --
+-- Data for Name: faves; Type: TABLE DATA; Schema: public; Owner: vagrant
+--
+
+COPY faves (fave_id, skirun_id, user_id) FROM stdin;
+\.
+
+
+--
+-- Name: faves_fave_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
+--
+
+SELECT pg_catalog.setval('faves_fave_id_seq', 1, false);
+
+
+--
 -- Data for Name: foods; Type: TABLE DATA; Schema: public; Owner: vagrant
 --
 
-COPY foods (food_id, name, description, location) FROM stdin;
-1	Fresh Tracks	You're already headed up the mountain, so why not start the day off right with breakfast at the top of Whistler?	f
-2	Winemakers Apres Series 	 The popular Winemaker Apres Series at Steeps Grill & Wine Bar atop Whistler Mountain features North America's best wines, paired with locally-sourced culinary delights.	f
-3	Christine'S On Blackcomb	Welcome to full-service dining with mountaintop style. Enjoy panoramic views along with classic dishes, prepared with the finest ingredients and a diverse wine list.	f
-4	Steeps Grill & Wine Bar	 One of Whistler's full-service dining restaurant, Steeps offers a menu that reflects the fine foods available in British Columbia as well as regional wines in flights, by the glass or bottle. For win	f
-5	Chic Pea	Escape the crowds and discover the Chic Pea. Try a toasted flatbread sandwich for lunch or take a break with the kids to sneak in a hot chocolate. You'll find us in the heart of the Family Zone on Whi	f
-6	Dusty'S Backside	Begin your day with a hearty breakfast, fresh baking and our cappuccino bar. Just want to get on the mountain(s)? Make a quick pit stop for a grab n' go breakfast for the gondola ride up. Dusty's is o	t
-7	Harmony Hut	 Warm up with hot cider and refuel for your next epic run in Harmony Bowl or Symphony Amphitheater (located at 2,115 metres/6,939 feet). 	f
-8	Ollies Grilled Cheese Shack 	 Located at Olympic Station (halfway up Whistler Gondola) on Whistler Mountain, Ollies Grilled Cheese shack is the perfect stop for gourmet grilled cheese sandwiches, fries, soups, espresso and snacks	f
-9	Raven'S Nest	Raven's Nest is Whistler Blackcomb's first ever all vegetarian restaurant and one of the first of its kind at ski resorts in North America. 	t
-10	Roundhouse Lodge	The biggest restaurant in Whistler, and home to our Olympic Legacy display, has three open food courts: Pika's, the Mountain Market and Expressway—featuring a great variety of traditional and intern	f
-11	Crystal Hut	 Crystal Hut is a cozy log cabin on Crystal Ridge famous for all-day Belgian waffles and wood-oven baked lunch specialties. Recognized by Sunset Magazine as a Top-10 Mountaintop Restaurant, it sits hi	f
-12	Glacier Creek Lodge	 Glacier Creek Lodge is a spectacular, spacious setting with floor-to-ceiling windows and ample seating. You'll find a diverse menu including a fresh sandwich bar and the popular Japanese Udon Noodle 	t
-13	Horstman Hut	Horstman Hut is a European-style hut with specialty stews, meats and soups. Enjoy sunny day BBQs on our ridge-top patio, at the top of Blackcomb Mountain. Take Horstman T-Bar or 7th Heaven Express to 	f
-14	Rendezvous Lodge	The Rendezvous Lodge's latest menu includes a wok station dishing up customized southeast Asian noodle and rice bowls; a fresh Mexican counter with burritos, tacos and salads; a burger bar using only 	f
-15	Rendezvous Lodge	The Rendezvous Lodge's latest menu includes a wok station dishing up customized southeast Asian noodle and rice bowls; a fresh Mexican counter with burritos, tacos and salads; a burger bar using only 	f
-16	The Glc 	 Rated one of North America's best après bars by SKI magazine, the GLC is a great choice for groups that are looking for a sophisticated lounge-style restaurant.	f
-17	Merlin'S Bar & Grill	One of the most famous party venues in Whistler awaits, amidst incredible views of Blackcomb Mountain, both inside and out.	t
-18	Dubh Linn Gate 	 "The Dubh Linn Gate Pubs in Whistler and Vancouver, BC feature live music, traditional Irish fare and the best selection of beer and whiskey on this side of the Atlantic.	t
-19	Cinnamon Bear Grille	Refined Hilton eatery serving traditional breakfast, pub grub & Pacific Northwest cuisine at dinner.	t
-20	Wizard Grill	Wizard Grill is a Casual Dining restaurant located in Whistler, British Columbia, Canada.	t
-21	Starucks Creekside 	 Starbucks uses the highest quality arabica coffee as the base for its espresso drinks. Learn about our unique coffees and espresso drinks today.	t
+COPY foods (food_id, name, description, location, yelp_id) FROM stdin;
+31	Horstman Hut	Horstman Hut is a European-style hut with specialty stews, meats and soups. Enjoy sunny day BBQs on our ridge-top patio, at the top of Blackcomb Mountain. Take Horstman T-Bar or 7th Heaven Express to 	f	horstman-hut-whistler
+32	Rendezvous Lodge	The Rendezvous Lodge's latest menu includes a wok station dishing up customized southeast Asian noodle and rice bowls; a fresh Mexican counter with burritos, tacos and salads; a burger bar using only 	f	rendezvous-whistler
+22	Fresh Tracks	You're already headed up the mountain, so why not start the day off right with breakfast at the top of Whistler?	f	roundhouse-lodge-whistler
+23	Christine'S	Welcome to full-service dining with mountaintop style. Enjoy panoramic views along with classic dishes, prepared with the finest ingredients and a diverse wine list.	f	christines-whistler
+24	Brewhouse At Whistler	 One of Whistler's full-service dining restaurant, offers a menu that reflects the fine foods available in British Columbia as well as regional wines in flights, by the glass or bottle.	f	brewhouse-at-whistler-whistler
+25	Chic Pea	Escape the crowds and discover the Chic Pea. Try a toasted flatbread sandwich for lunch or take a break with the kids to sneak in a hot chocolate. You'll find us in the heart of the Family Zone on Whi	f	chic-pea-whistler
+26	Dusty'S Backside	Begin your day with a hearty breakfast, fresh baking and our cappuccino bar. Just want to get on the mountain(s)? Make a quick pit stop for a grab n' go breakfast for the gondola ride up. Dusty's is o	t	dustys-bar-and-bbq-whistler
+27	Raven'S Nest	Raven's Nest is Whistler Blackcomb's first ever all vegetarian restaurant and one of the first of its kind at ski resorts in North America. 	t	ravens-nest-whistler
+28	Roundhouse Lodge	The biggest restaurant in Whistler, and home to our Olympic Legacy display, has three open food courts: Pika's, the Mountain Market and Expressway—featuring a great variety of traditional and intern	f	roundhouse-lodge-whistler
+29	Crystal Hut	 Crystal Hut is a cozy log cabin on Crystal Ridge famous for all-day Belgian waffles and wood-oven baked lunch specialties. Recognized by Sunset Magazine as a Top-10 Mountaintop Restaurant, it sits hi	f	crystal-hut-whistler
+30	Glacier Creek Lodge	 Glacier Creek Lodge is a spectacular, spacious setting with floor-to-ceiling windows and ample seating. You'll find a diverse menu including a fresh sandwich bar and the popular Japanese Udon Noodle 	t	glacier-creek-lodge-whistler
+33	Rendezvous Lodge	The Rendezvous Lodge's latest menu includes a wok station dishing up customized southeast Asian noodle and rice bowls; a fresh Mexican counter with burritos, tacos and salads; a burger bar using only 	f	rendezvous-whistler
+34	The Glc 	 Rated one of North America's best après bars by SKI magazine, the GLC is a great choice for groups that are looking for a sophisticated lounge-style restaurant.	f	garibaldi-lift-co-bar-and-grill-whistler-4
+35	Merlin'S Bar & Grill	One of the most famous party venues in Whistler awaits, amidst incredible views of Blackcomb Mountain, both inside and out.	t	merlins-bar-and-grill-whistler
+36	Dubh Linn Gate 	 The Dubh Linn Gate Pubs in Whistler and Vancouver, BC feature live music, traditional Irish fare and the best selection of beer and whiskey on this side of the Atlantic.	t	dubh-linn-gate-whistler
+37	Cinnamon Bear Grille	Refined Hilton eatery serving traditional breakfast, pub grub & Pacific Northwest cuisine at dinner.	t	cinnamon-bear-grille-whistler-3
+38	Wizard Grill	Wizard Grill is a Casual Dining restaurant located in Whistler, British Columbia, Canada.	t	wizard-grill-whistler
+39	Lift Coffee Company	 Serves breakfast, lunch, coffee and drinks	t	lift-coffee-company-whistler
 \.
 
 
@@ -754,7 +808,7 @@ COPY foods (food_id, name, description, location) FROM stdin;
 -- Name: foods_food_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
 --
 
-SELECT pg_catalog.setval('foods_food_id_seq', 21, true);
+SELECT pg_catalog.setval('foods_food_id_seq', 39, true);
 
 
 --
@@ -762,27 +816,24 @@ SELECT pg_catalog.setval('foods_food_id_seq', 21, true);
 --
 
 COPY foods_lifts ("FL_id", lift_id, food_id) FROM stdin;
-1	15	1
-2	15	2
-3	2	3
-4	15	4
-5	17	5
-6	18	6
-7	26	7
-8	16	8
-9	5	9
-10	15	10
-11	9	11
-12	6	12
-13	11	13
-14	2	14
-15	21	15
-16	15	16
-17	1	17
-18	3	18
-19	15	19
-20	18	20
-21	18	21
+22	15	22
+23	2	23
+24	15	24
+25	17	25
+26	18	26
+27	5	27
+28	15	28
+29	9	29
+30	6	30
+31	11	31
+32	2	32
+33	21	33
+34	15	34
+35	1	35
+36	3	36
+37	15	37
+38	18	38
+39	15	39
 \.
 
 
@@ -790,7 +841,7 @@ COPY foods_lifts ("FL_id", lift_id, food_id) FROM stdin;
 -- Name: foods_lifts_FL_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
 --
 
-SELECT pg_catalog.setval('"foods_lifts_FL_id_seq"', 21, true);
+SELECT pg_catalog.setval('"foods_lifts_FL_id_seq"', 39, true);
 
 
 --
@@ -1860,7 +1911,7 @@ COPY users (user_id, fname, lname, email, zipcode, password, level_id) FROM stdi
 -- Name: users_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
 --
 
-SELECT pg_catalog.setval('users_user_id_seq', 101, true);
+SELECT pg_catalog.setval('users_user_id_seq', 1, false);
 
 
 --
@@ -1868,7 +1919,7 @@ SELECT pg_catalog.setval('users_user_id_seq', 101, true);
 --
 
 COPY weather (weather_id, daily_snowfall, overnight_snowfall, forcast_icon, wind_forcast, snow_forcast) FROM stdin;
-1	2	1.78	night-snow	Calm	Mainly sunny. 
+1	2	1.78	night-snow	calm	Mainly Sunny
 \.
 
 
@@ -1876,7 +1927,7 @@ COPY weather (weather_id, daily_snowfall, overnight_snowfall, forcast_icon, wind
 -- Name: weather_weather_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
 --
 
-SELECT pg_catalog.setval('weather_weather_id_seq', 1, true);
+SELECT pg_catalog.setval('weather_weather_id_seq', 1, false);
 
 
 --
@@ -1893,6 +1944,14 @@ ALTER TABLE ONLY categories
 
 ALTER TABLE ONLY catusers
     ADD CONSTRAINT catusers_pkey PRIMARY KEY (catuser_id);
+
+
+--
+-- Name: faves_pkey; Type: CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY faves
+    ADD CONSTRAINT faves_pkey PRIMARY KEY (fave_id);
 
 
 --
@@ -1981,6 +2040,22 @@ ALTER TABLE ONLY catusers
 
 ALTER TABLE ONLY catusers
     ADD CONSTRAINT catusers_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(user_id);
+
+
+--
+-- Name: faves_skirun_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY faves
+    ADD CONSTRAINT faves_skirun_id_fkey FOREIGN KEY (skirun_id) REFERENCES skiruns(skirun_id);
+
+
+--
+-- Name: faves_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY faves
+    ADD CONSTRAINT faves_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(user_id);
 
 
 --

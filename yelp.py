@@ -11,6 +11,10 @@ from flask import (Flask, render_template, redirect, flash,
 from flask_debugtoolbar import DebugToolbarExtension
 from jinja2 import StrictUndefined
 
+app = Flask(__name__)
+
+connect_to_db(app)
+
 try:
     # For Python 3.0 and later
     from urllib.error import HTTPError
@@ -78,3 +82,26 @@ def get_business(api_key, business_id):
     business_path = BUSINESS_PATH + business_id
 
     return request(API_HOST, business_path, api_key)
+
+
+def sql_saver():
+    restaurants = open("static/json/food.txt")
+
+    for restaurant in restaurants:
+        restaurant = restaurant.strip()
+        restaurant_data = restaurant.split('|')
+        name = restaurant_data[0].title()
+        description = restaurant_data[1][:200]
+        location = restaurant_data[2]
+        lift_id = int(restaurant_data[4])
+        yelp_id = restaurant_data[5]
+
+        # import pdb; pdb.set_trace()
+        lift_obj = Lift.query.filter(Lift.lift_id == lift_id).first()
+
+        new_restaurant = Food(name=name, description=description, location=location, yelp_id=yelp_id)
+        db.session.add(new_restaurant)
+        # adding relationship
+        new_restaurant.lifts.append(lift_obj)
+
+    db.session.commit()

@@ -27,10 +27,9 @@ class WhistlerSpider(scrapy.Spider):
         # os.system('createdb whistler')
         # db.create_all()
         # r = requests.get('https://www.whistlerblackcomb.com/the-mountain/mountain-conditions/terrain-and-lift-status.aspx')
-        skiruns_str = Selector(response=response).xpath('//script/text()').extract()[10]
+        skiruns_str = Selector(response=response).xpath('//script/text()').extract()[8]
         skiruns = json.loads(skiruns_str.split("=")[1].split(";")[0])
         lifts = skiruns['Lifts']
-
         #add all lifts to the DB
         for lift_dict in lifts:
             liftname = lift_dict['Name']
@@ -68,6 +67,7 @@ class WhistlerSpider(scrapy.Spider):
 
                 new_run = Skirun(name=skirun_name, groomed=skirun_groomed,
                                      status=skirun_status, level=level)
+                import pdb; pdb.set_trace()
                 db.session.add(new_run)
             db.session.commit()
 

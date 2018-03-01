@@ -422,6 +422,32 @@ def json_skiruns():
     skirun_names = skirun_names.rstrip()
     return jsonify(skirun_names)
 
+
+@app.route('/add-fave', methods=["POST"])
+def add_to_session():
+    """Add favorite to session lift list"""
+
+    name = request.form.get('run_name')
+    lift_name = request.form.get('lift_name')
+    user_id = session['logged_in']
+
+    # update db
+    new_fave = Fave(name=name, user_id=user_id)
+
+    db.session.add(new_fave)
+    db.session.commit()
+
+    # if session.get('faves'):
+    #     if session['faves'].get(lift_name):
+    #         session['faves'][lift_name].append(skirun_id)
+    #     else:
+    #         session['faves'][lift_name] = [skirun_id]
+    # else:
+    #     session['faves'] = {lift_name: [skirun_id]}
+
+    import pdb; pdb.set_trace()
+    return "success"
+
 ##############################################################################
 
 if __name__ == "__main__":

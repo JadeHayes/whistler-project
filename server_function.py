@@ -8,16 +8,6 @@ from model import connect_to_db, db, Category, Weather, Lift, Skirun, User, Rati
 from random import sample
 import json
 import os
-# import oauth2 as oauth
-import twitter
-
-
-api = twitter.Api(consumer_key=os.environ['TWITTER_CONSUMER_KEY'],
-                  consumer_secret=os.environ['TWITTER_CONSUMER_SECRET'],
-                  access_token_key=os.environ['TWITTER_ACCESS_TOKEN_KEY'],
-                  access_token_secret=os.environ['TWITTER_ACCESS_TOKEN_SECRET'])
-
-print api.VerifyCredentials()
 
 
 def blackcomb_flare_json():
@@ -96,17 +86,3 @@ def whistler_flare_json():
         w_master_dict = {'name': 'Whistler', 'children': lifts_list}
 
     return w_master_dict
-
-
-def create_dict():
-    """creates a dictionary object"""
-
-
-
-
-
-
-
-
-
-

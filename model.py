@@ -244,6 +244,38 @@ class Rating(db.Model):
                 'comment': self.comment}
 
 
+class Fave(db.Model):
+    """Tracks all of the users favorite skiruns"""
+
+    # Lets SQL alchemy know there is a table named 'faves'
+    __tablename__ = "faves"
+
+    #Creating the table
+    # Lets SQL alchemy know this is an integer primary key that auto increments
+    fave_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+
+    skirun_id = db.Column(db.Integer,
+                          db.ForeignKey('skiruns.skirun_id'),
+                          nullable=False)
+
+    user_id = db.Column(db.Integer,
+                        db.ForeignKey('users.user_id'),
+                        nullable=False)
+
+    # Defining the relationship between the user class and the faves table
+    users = db.relationship("User",
+                            backref=db.backref("faves"))
+
+    # Defining the relationship between the skirun class and the faves table
+    skiruns = db.relationship("Skirun",
+                              backref=db.backref("faves"))
+
+    def __repr__(self):
+        """ Provide helpful information about this class"""
+
+        return "<ID: fave_id={} skirun_id={}>".format(self.fave_id, self.skirun_id)
+
+
 class Weather(db.Model):
     """information about weather on Blackcomb & Whistler mountain """
 

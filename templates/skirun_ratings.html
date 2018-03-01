@@ -36,7 +36,24 @@ img {
 </body>
 
 </html>
+<div display="run-info inline-block">
+   {% if skirun.status %}
+      Freshly Groomed Today
+   {% endif %} <br>
+      Level: {{ skirun.level }}<br>
+</div>
+<div display="inline-block">
+  {% if skirun.lifts %}
+  Mountain: {{ skirun.lifts[0].mountain }} <br>
+  Type: {{ skirun.category.cat }}
+<h5> Lift Access: </h5>
+  {% for lift in skirun.lifts %}
+  {{ lift.name }} <br>
 
+
+  {% endfor %}
+  {% endif %}
+</div>
 
 <div id="root"> <!-- component will go in this div --> </div>
 

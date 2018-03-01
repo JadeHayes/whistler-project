@@ -5,11 +5,20 @@
     height: 30em;
     width: 42.75em;
 }
+
+.open {
+    display: inline-block;
+    height: 270px;
+    width: 70%;
+    overflow: hidden;
+    background-color: #F0F8FF;
+}
+
 </style>
 
 <h2> {{lift.name}} </h2>
-<div>
-<img src="https://s-media-cache-ak0.pinimg.com/originals/5f/23/d4/5f23d47df4ee88438ef9b5e7f2701481.jpg" class='container-fluid'/>
+ <div style="text-align:center">
+    <img class="open container-fluid" src="https://s-media-cache-ak0.pinimg.com/originals/5f/23/d4/5f23d47df4ee88438ef9b5e7f2701481.jpg"/>
 </div>
 
 <html lang="en">
@@ -17,9 +26,9 @@
   <title>Bootstrap Modal</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 
@@ -70,35 +79,48 @@
 </html>
 
 
+
 <b>Skiruns</b> </br>
 {% if green %}
-<div class='green col-xs-6 inline container'>
+<div class='green col-xs-4 inline container'>
 <b>Beginner level skiruns</b></br>
 {% for run in green %}
-    <a href="/{{ run.name }}">{{ run.name }}</a></br>
+  <span class="fav glyphicon glyphicon-heart-empty glyphicon-heart" data-run= "{{ run.name }}" data-lift = "{{ lift.name }}" data-id="{{run.skirun_id}}"> </span>  <a href="/{{ run.name }}">{{ run.name }}</a></br>
     {% endfor %}
 </div>
 {% endif %}
 
 
 {% if blue %}
-<div class='blue col-xs-6 inline container'>
+<div class='blue col-xs-4 inline container'>
 <b>Intermediate level skiruns</b></br>
 {% for run in blue %}
-    <a href="/{{ run.name }}">{{ run.name }}</a></br>
+    <span class="fav glyphicon glyphicon-heart-empty glyphicon-heart" data-run= "{{ run.name }}" data-lift = "{{ lift.name }}" data-id="{{run.skirun_id}}"></span> <a href="/{{ run.name }}"> {{ run.name }}</a></br>
     {% endfor %}
 </div>
 {% endif %}
 
 
 {% if black %}
-<div class='black col-xs-6 inline container'>
+<div class='black col-xs-4 inline container'>
 <b>Advanced level skiruns</b></br>
 {% for run in black %}
-    <a href="/{{ run.name }}">{{ run.name }}</a></br>
+    <span class="fav glyphicon glyphicon-heart-empty glyphicon-heart" data-run= "{{ run.name }}" data-lift = "{{ lift.name }}" data-id="{{run.skirun_id}}"></span> <a href="/{{ run.name }}">{{ run.name }}</a></br>
     {% endfor %}
 </div>
 {% endif %}
 
+
+<script type="text/javascript">
+function colorChange(evt){
+    // change the fill of the glyphicon
+    $(this).toggleClass("glyphicon-heart-empty");
+    let run_name = $(this).data('run');
+    let lift_name = $(this).data('lift');
+    $.post("/add-fave", {'run_name':run_name, 'lift_name':lift_name}, function(data) { console.log(data)});
+  }
+$(".fav").on('click', colorChange);
+
+</script>
 
 {% endblock %}
