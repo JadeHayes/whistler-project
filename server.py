@@ -6,7 +6,7 @@ from flask import (Flask, render_template, redirect, request, flash,
                    session, jsonify)
 from flask_debugtoolbar import DebugToolbarExtension
 
-from model import connect_to_db, db, Category, Weather, Lift, Skirun, User, Rating, SkillLevel, CatUser, Food, FoodLift, SkirunLift
+from model import connect_to_db, db, Category, Weather, Lift, Skirun, User, Rating, SkillLevel, CatUser, Food, FoodLift, SkirunLift, Fave
 from random import sample
 from server_function import blackcomb_flare_json, whistler_flare_json
 import yelp
@@ -132,12 +132,13 @@ def index():
         for weather in weather_obj:
             total_snow = float(weather.daily_snowfall) + float(weather.overnight_snowfall)
             total_snow = round(total_snow, 2)
+
             # Calculate ideal riding category based on the weather
-            if total_snow >= 6 and weather.wind_forcast == 'Calm':
+            if total_snow >= 6 and weather.wind_forcast == 'calm':
                 daily_cat = 'bowl'
             elif total_snow > 12:
                 daily_cat = 'tree'
-            elif total_snow < 6 and weather.wind_forcast == 'Calm':
+            elif total_snow < 6 and weather.wind_forcast == 'calm':
                 daily_cat = 'park'
 
         for run in skirun_objs:
@@ -187,6 +188,15 @@ def profile():
         lifts = Lift.query.all()
         runs = Skirun.query.all()
 
+        # get user faves
+        faves = Fave.query.filter(Fave.user_id == userid).all()
+
+        fave_runs = []
+
+        for fave in faves:
+            fruns = Skirun.query.filter(Skirun.skirun_id == fave.skirun_id).first()
+            fave_runs.append(fruns)
+
         # get the skirun_id on the ski run table that equals the skirun id on the ratings table
         try:
             skirun_id = Skirun.query.filter(Skirun.skirun_id == ratings.skirun_id).first()
@@ -224,7 +234,7 @@ def profile():
         return render_template("profile.html", user=user, cat_obj=cat_obj,
                                user_runs=user_runs, user_skill=user_skill,
                                ratings=ratings, run=run, skirun_id=skirun_id,
-                               mountains=mountains)
+                               mountains=mountains, fave_runs=fave_runs)
 
     else:
         flash("Please log in first!")
@@ -393,7 +403,6 @@ def display_livecam():
 def json_lifts():
     """returns json and lifts jsonified """
 
-
     lift_names = []
 
     # query db for  lifts objs, loop though and append
@@ -427,25 +436,17 @@ def json_skiruns():
 def add_to_session():
     """Add favorite to session lift list"""
 
-    name = request.form.get('run_name')
+    skirun_id = request.form.get('run_id')
+    skirun_id = int(skirun_id)
     lift_name = request.form.get('lift_name')
     user_id = session['logged_in']
 
     # update db
-    new_fave = Fave(name=name, user_id=user_id)
+    new_fave = Fave(skirun_id=skirun_id, user_id=user_id)
 
     db.session.add(new_fave)
     db.session.commit()
 
-    # if session.get('faves'):
-    #     if session['faves'].get(lift_name):
-    #         session['faves'][lift_name].append(skirun_id)
-    #     else:
-    #         session['faves'][lift_name] = [skirun_id]
-    # else:
-    #     session['faves'] = {lift_name: [skirun_id]}
-
-    import pdb; pdb.set_trace()
     return "success"
 
 ##############################################################################

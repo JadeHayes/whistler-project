@@ -7,23 +7,50 @@
 <!-- custom scrollbar plugin script -->
 <script src="http://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
 
-<script src="static/style.css"></script>
 
-<script type="text/javascript">
-twttr.widgets.createTimeline(
-  {
-    sourceType: "twitter-timeline",
-    ownerScreenName: "Whistler Blackcomb",
-    slug: "WhistlerBlckcmb"
-  },
-  document.getElementById("twitter-list")
-);
+<!-- YouTube Video -->
+<head>
+  <title>Bootstrap Modal</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
 
-</script>
 
-<div class="container updates col-xs-6" style='text-align:center';>
-    <h2> Whistler MTN </h2>
-        <hr>
+<!-- Modal -->
+  <div class="modal fade" id="modal-liveCam" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"> Live Feed </h4>
+        </div>
+
+        <!-- YouTube Video -->
+        <div class="modal-body" style="text-align:center">
+            <iframe width="504" height="283" src="https://www.youtube.com/embed/CQ7hMIiImBo" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+<!-- Mountain Conditions Update -->
+<div class="container updates col-xs-6">
+  <div style='text-align:center'>
+    <span>
+      <h2> Whistler MTN </h2>
+      <hr>
+      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-liveCam">LiveCam</button><br>
+    </span>
             <h4>A quick MTN report</h4>
                 <div id='ride_choice'>
                     <p> Best spot to ride for todays conditions:
@@ -57,20 +84,32 @@ twttr.widgets.createTimeline(
             <h4> Tomorrow's Forecast </h4>
              {{ weather.snow_forcast}}</br>
     </div>
-</div>   
-
-
-
-<div class="inline-block col-xs-6 twitter-widget-holder">
-<a class="twitter-timeline twitter-widget-holder"
-  href="https://twitter.com/WhistlerBlckcmb" height="600" data-chrome="nofooter noborders"></a>
-Tweets from Whistler Blackcomb
-
-<a class="twitter-list twitter-widget-holder" href="https://twitter.com/WhistlerBlckcmb"></a> 
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-</a>
+  </div>   
 </div>
 
+<!-- Twitter Widget -->
+<div class="inline-block col-xs-6 twitter-widget-holder">
+
+  <a class="twitter-timeline twitter-widget-holder"
+  href="https://twitter.com/WhistlerBlckcmb" height="600" data-chrome="nofooter noborders"></a>
+  Tweets from Whistler Blackcomb
+
+  <a class="twitter-list twitter-widget-holder" href="https://twitter.com/WhistlerBlckcmb"></a> 
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </a>
+</div>
+
+<script type="text/javascript">
+twttr.widgets.createTimeline(
+  {
+    sourceType: "twitter-timeline",
+    ownerScreenName: "Whistler Blackcomb",
+    slug: "WhistlerBlckcmb"
+  },
+  document.getElementById("twitter-list")
+);
+
+</script>
 
 <script>
   (function($){

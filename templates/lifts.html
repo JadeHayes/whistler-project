@@ -37,7 +37,7 @@
   <h2>Restaurants</h2>
   <!-- Trigger the modal with a button -->
     {% for food in yelp_infos %}
-  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modal-{{food.food_id}}">{{food.name}}
+  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-{{food.food_id}}">{{food.name}}
      </button>
 
   <!-- Modal -->
@@ -112,14 +112,15 @@
 
 
 <script type="text/javascript">
-function colorChange(evt){
-    // change the fill of the glyphicon
+function dbAddFave(evt){
+
+    // change fill of glyphicon & add fave to db
     $(this).toggleClass("glyphicon-heart-empty");
-    let run_name = $(this).data('run');
+    let run_id = $(this).data('id');
     let lift_name = $(this).data('lift');
-    $.post("/add-fave", {'run_name':run_name, 'lift_name':lift_name}, function(data) { console.log(data)});
+    $.post("/add-fave", {'run_id':run_id, 'lift_name':lift_name}, function(data) { console.log(data)});
   }
-$(".fav").on('click', colorChange);
+$(".fav").on('click', dbAddFave);
 
 </script>
 

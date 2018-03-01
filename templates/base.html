@@ -1,5 +1,12 @@
 <!doctype html>
 <html lang="en">
+
+<style type="text/css">
+
+.navbar-nav > li > a {padding-top:16px !important; padding-bottom:5px !important; font-size: 1.2em !important;}
+.navbar {min-height:32px !important}
+
+</style>
 <head>
 
   <!-- Link to bootstrap -->
@@ -19,13 +26,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    {% if session.get('logged_in') %}
   <title>Whistler</title>
 </head>
   <body>
   <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
-        <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
+        <button type="button" data-target="#navbarCollapsed" data-toggle="collapse" class="navbar-toggle">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -34,12 +43,11 @@
         <a href="/home" class="navbar-brand">WhistlerMTN</a>
     </div>
     <!-- Collection of nav links and other content for toggling -->
-    {% if session.get('logged_in') %}
     <div id="navbarCollapse" class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-            <li class="navbar"><a href="/lifts">lifts</a></li>
-            <li><a href="/profile">profile</a></li>
-            <li class="navbar-right"><a href="trailmap">trailmap</a></li>
+            <li><a href="/lifts">Lifts</a></li>
+            <li><a href="/profile">Profile</a></li>
+            <li><a href="/trailmap">Trailmap</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li><a href="/logout">Logout</a></li>
@@ -47,14 +55,7 @@
       {% endif %}
     </div>
   </nav>
-
-  <script type="text/javascript">
-  $(".nav a").on("click", function(){
-     $(".nav").find(".active").removeClass("active");
-     $(this).parent().addClass("active");
-  });
-
-  </script>
+</div>
 
   <ul>
     {% for message in get_flashed_messages() %}

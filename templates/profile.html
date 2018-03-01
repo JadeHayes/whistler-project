@@ -3,10 +3,14 @@
 
 <h2 id='greeting'> Welcome Back {{ user.fname.title() }} {{ user.lname.title() }}!</h2> 
 <div class='container-fluid'>
-</dv>
+</div>
 
-<div style="text-align:center">
-<iframe width="504" height="283" src="https://www.youtube.com/embed/CQ7hMIiImBo" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<div class="faves"> 
+      {% for fave in fave_runs %}
+    <ul>
+    <li> {{ fave.name }} </li>
+    </ul>
+    {% endfor %}
 </div>
 
 <div>Your personal ride report </div>
@@ -24,6 +28,8 @@
     {% endfor %}
 </div>
 {% endfor %}
+
+
 <div class='col-xs-12'>
   <img src="https://images.vailresorts.com/image/upload/c_scale,dpr_2.0,f_auto,q_auto,w_1500/v1/Whistler%20Blackcomb/Heros/2000x400/DavidMcColm_DSC1648wb.jpg" alt="Whistler Mountains" class='col-xs-12' style='padding:2em'>
 </div>
@@ -36,6 +42,7 @@
     <th align="left">Comment</th>
   </tr>
   <tr>
+
 
     <!-- This link is connecting to the /rating_id -->
     {% if ratings %}

@@ -1,19 +1,171 @@
 {% extends 'base.html' %}
 {% block content %} 
-<h3> Log-in </h3>
-<div id='login'>
-<form action='/login' method='POST'>
-    email: <input type='email' name='email' required>
-    password: <input type='password' name='password' required>
-    <button type='submit' class="btn btn-danger">Sign-in</button>
-</form>
-<div>
 
-<div id='register'>
-    New users
-<a href="/register"> register here </a>
-</div>   
+<style type="text/css">
+.signin {
+    position:fixed;
+    top: 50%;
+    left: 50%;
+    width:20em;
+    height:18em;
+    padding:0.5em;
+    margin-top: -9em; /*set to a negative number 1/2 of your height*/
+    margin-left: -10em; /*set to a negative number 1/2 of your width*/
+    border-radius: 25px;
+    background-color: rgba(200, 200, 200, .3);
+}
+
+.homepage-hero-module {
+    border-right: none;
+    border-left: none;
+    position: relative;
+}
+.no-video .video-container video,
+.touch .video-container video {
+    display: none;
+}
+.no-video .video-container .poster,
+.touch .video-container .poster {
+    display: block !important;
+}
+.video-container {
+    position: relative;
+    bottom: 0%;
+    left: 0%;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background: #000;
+}
+.video-container .poster img {
+    width: 100%;
+    bottom: 0;
+    position: absolute;
+}
+.video-container .filter {
+    z-index: 100;
+    position: relative;
+    background: rgba(0, 0, 0, 0.4);
+    width: 100%;
+}
+.video-container video {
+    position: relative;
+    z-index: 0;
+    bottom: 0;
+}
+.video-container video.fillWidth {
+    width: 100%;
+    height: 100%;
+}
+</style>
+
+<div class="homepage-hero-module">
+    <div class="video-container">
+        <div class="filter"></div>
+        <video autoplay loop class="fillWidth">
+            <source src="/static/Mt_Baker/MP4/Mt_Baker.mp4" type="video/mp4" />Your browser does not support the video tag. I suggest you upgrade your browser.
+            <source src="/static/WEBM/Mt_Baker.webm" type="video/webm" />Your browser does not support the video tag. I suggest you upgrade your browser.
+        </video>
+        <div class="poster hidden">
+            <img src="/static/Snapshots/Mt_Baker.jpg" alt="">
+        </div>
+    </div>
+</div>
 
 
+<body class="background">
+<div class="signin">
+<!-- Awesome Login -->
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-5 col-md-3">
+            <form action='/login' method='POST'>
+                <div class="form-login signin">
+                    <h4>Welcome back.</h4>
+                        <input type="email" name="email" class="form-control input-sm chat-input" placeholder="email" /></br>
+                        <input type="password" name="password" class="form-control input-sm chat-input" placeholder="password" /></br>
+                <div class="wrapper">
+                <span class="group-btn">     
+                <button type='submit' class="btn btn-danger">Sign-in</button>
+                </span>
+                <div id='register'>
+                    New users
+                    <a href="/register"> register here </a>
+                </div>   
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</body>
+
+<script type="text/javascript">
+//jQuery is required to run this code
+$( document ).ready(function() {
+
+    scaleVideoContainer();
+
+    initBannerVideoSize('.video-container .poster img');
+    initBannerVideoSize('.video-container .filter');
+    initBannerVideoSize('.video-container video');
+
+    $(window).on('resize', function() {
+        scaleVideoContainer();
+        scaleBannerVideoSize('.video-container .poster img');
+        scaleBannerVideoSize('.video-container .filter');
+        scaleBannerVideoSize('.video-container video');
+    });
+
+});
+
+function scaleVideoContainer() {
+
+    var height = $(window).height() + 5;
+    var unitHeight = parseInt(height) + 'px';
+    $('.homepage-hero-module').css('height',unitHeight);
+
+}
+
+function initBannerVideoSize(element){
+
+    $(element).each(function(){
+        $(this).data('height', $(this).height());
+        $(this).data('width', $(this).width());
+    });
+
+    scaleBannerVideoSize(element);
+
+}
+
+function scaleBannerVideoSize(element){
+
+    var windowWidth = $(window).width(),
+    windowHeight = $(window).height() + 5,
+    videoWidth,
+    videoHeight;
+
+    // console.log(windowHeight);
+
+    $(element).each(function(){
+        var videoAspectRatio = $(this).data('height')/$(this).data('width');
+
+        $(this).width(windowWidth);
+
+        if(windowWidth < 1000){
+            videoHeight = windowHeight;
+            videoWidth = videoHeight / videoAspectRatio;
+            $(this).css({'margin-top' : 0, 'margin-left' : -(videoWidth - windowWidth) / 2 + 'px'});
+
+            $(this).width(videoWidth).height(videoHeight);
+        }
+
+        $('.homepage-hero-module .video-container video').addClass('fadeIn animated');
+
+    });
+}
+</script>
 
 {% endblock %}
