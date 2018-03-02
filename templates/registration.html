@@ -14,38 +14,57 @@ $(document).ready(function () {
 });
 </script>
 
-
-<h3> Registration </h3>
-<div id="registration">
-<form action='/register' method='POST'>
-    <p> First name: <input type='text' name='fname' required> </p>
-    <p> Last name:  <input type='text' name='lname' required> </p><br>
-    <p> email: <input type='email' name='email' required></p>
-    <p> password: <input type='password' name='password' required></p>
-    <p> zip code: <input type="text" pattern="[0-9]{5}" name="zipcode" /></p>
-
-        <p> Which level skier/rider are you? </p>
-            <div>
-                <input type="radio" id="green" name="level" value="1" required>
-                    <label for="green">Beginner</label>
-                <input type="radio" id="blue" name="level" value="2" required>
-                    <label for="blue">Intermediate</label>
-                <input type="radio" id="black" name="level" value="3" required>
-                    <label for="black">Advanced</label>
-  </div>
-
-        <p> Where do you like to ride most? </p>
-    <div class="checkgroup">
-        <input id="groomers" type="checkbox" name="category" value="2" class='data-grouprequired'>    
-            <label for="groomers">Freshly Groomed Trails</label>
-        <input id="trees" type="checkbox" name="category" value="1">
-            <label for="trees">Powdery Trees</label>
-        <input id="bowls" type="checkbox" name="category" value="4"> 
-            <label for="bowls">Open Bowls</label>
-        <input id="park" type="checkbox" name="category" value="3"> 
-            <label for="park">Park</label> <br>
+<div class="homepage-hero-module">
+    <div class="video-container">
+        <div class="filter"></div>
+        <video autoplay loop class="fillWidth">
+            <source src="/static/Mt_Baker/MP4/Mt_Baker.mp4" type="video/mp4" />Your browser does not support the video tag. I suggest you upgrade your browser.
+            <source src="/static/WEBM/Mt_Baker.webm" type="video/webm" />Your browser does not support the video tag. I suggest you upgrade your browser.
+        </video>
+        <div class="poster hidden">
+            <img src="/static/Snapshots/Mt_Baker.jpg" alt="">
+        </div>
     </div>
-    <input type='submit' value='go!' id='checkBtn'>
-</form>
+</div>
+
+
+<body class="background">
+<div id="registration">
+<!-- Awesome Registration -->
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-5 col-md-3">
+            <form action='/register' method='POST'>
+                <div class="form-login signin">
+                    <h4>Register.</h4>
+                        <input type='text' name='fname' class="form-control input-sm chat-input" placeholder="First name"required/></br>
+
+                        <input type='text' name='lname' class="form-control input-sm chat-input" placeholder="Last name"required/></br>
+
+                        <input type="email" name="email" class="form-control input-sm chat-input" placeholder="email" /></br>
+
+                        <input type="password" name="password" class="form-control input-sm chat-input" placeholder="password" required/></br>
+
+
+                <div class="wrapper">
+                <span class="group-btn">     
+                <button type='submit' class="btn btn-danger">Register</button>
+                </span>
+                <div id='register'>
+                    <b>Already registered?</b>
+                    <a href="/"> login </a>
+                </div>   
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</body>
+
+<!-- Link to JS doc -->
+<script src="static/video.js"></script>
 
 {% endblock %}

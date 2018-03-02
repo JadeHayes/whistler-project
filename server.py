@@ -11,10 +11,14 @@ from random import sample
 from server_function import blackcomb_flare_json, whistler_flare_json
 import yelp
 import os
+from twilio.rest import Client
 
 ##############################################################################
 
 YELP_API_KEY= os.environ.get("YELP_API_KEY")
+TWILIO_SID = os.environ.get("TWILIO_SID")
+TWILIO_TOKEN = os.environ.get("TWILIO_TOKEN")
+client = Client(TWILIO_SID, TWILIO_TOKEN)
 
 API_HOST = 'https://api.yelp.com'
 SEARCH_PATH = '/v3/businesses/search'
@@ -164,6 +168,31 @@ def index():
         return redirect("/")
 
 
+@app.route('/twilio')
+def twilio_texts():
+    """ text user their skirun favorites list """
+    user_id = session['logged_in']
+    skirun_objs = Skirun.query.join(Fave).filter(Fave.user_id == user_id).all()
+
+    whistler = []
+    blackcomb = []
+
+    for run_obj in skirun_objs:
+        if run_obj.lifts[0].mountain == "Whistler":
+            whistler.append(run_obj.name)
+        else:
+            blackcomb.append(run_obj.name)
+
+    # text client a list of fave skiruns & lifts
+    message = client.messages.create(to="+16504555405",
+                                     from_="+14158499644",
+                                     body="Whistler: {}, Blackcomb: {}".format(
+                                     whistler,
+                                     blackcomb ))
+
+    return "Favorites list sent!"
+
+
 @app.route('/lifts')
 def show_lifts():
     """ display D3 Data """
@@ -191,11 +220,16 @@ def profile():
         # get user faves
         faves = Fave.query.filter(Fave.user_id == userid).all()
 
-        fave_runs = []
+        W_fave_runs = set()
+        B_fave_runs = set()
 
         for fave in faves:
-            fruns = Skirun.query.filter(Skirun.skirun_id == fave.skirun_id).first()
-            fave_runs.append(fruns)
+            if fave.skiruns.lifts[0].mountain == "Whistler":
+                fruns = Skirun.query.filter(Skirun.skirun_id == fave.skirun_id).first()
+                W_fave_runs.add(fruns)
+            else:
+                fruns = Skirun.query.filter(Skirun.skirun_id == fave.skirun_id).first()
+                B_fave_runs.add(fruns)
 
         # get the skirun_id on the ski run table that equals the skirun id on the ratings table
         try:
@@ -231,10 +265,12 @@ def profile():
             groomers = sample(groomers,  3)
         [user_runs.append(groomer) for groomer in groomers]
 
+
         return render_template("profile.html", user=user, cat_obj=cat_obj,
                                user_runs=user_runs, user_skill=user_skill,
                                ratings=ratings, run=run, skirun_id=skirun_id,
-                               mountains=mountains, fave_runs=fave_runs)
+                               mountains=mountains, W_fave_runs=W_fave_runs,
+                               B_fave_runs=B_fave_runs)
 
     else:
         flash("Please log in first!")
@@ -428,7 +464,7 @@ def json_skiruns():
     skirun_objs = Skirun.query.all()
     for sname in skirun_objs:
         skirun_names.append({'name': sname.name})
-    skirun_names = skirun_names.rstrip()
+
     return jsonify(skirun_names)
 
 

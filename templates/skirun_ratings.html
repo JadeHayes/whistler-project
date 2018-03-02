@@ -48,7 +48,7 @@ img {
   Type: {{ skirun.category.cat }}
 <h5> Lift Access: </h5>
   {% for lift in skirun.lifts %}
-  {{ lift.name }} <br>
+  <a href="{{ lift.name }}">{{ lift.name }}</a><br>
 
 
   {% endfor %}

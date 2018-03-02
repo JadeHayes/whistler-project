@@ -6,9 +6,17 @@ from flask_debugtoolbar import DebugToolbarExtension
 
 from model import connect_to_db, db, Category, Weather, Lift, Skirun, User, Rating, SkillLevel, CatUser
 from random import sample
+from twilio.rest import Client
 import json
 import os
 
+##############################################################################
+
+TWILIO_SID = os.environ.get("TWILIO_SID")
+TWILIO_TOKEN = os.environ.get("TWILIO_TOKEN")
+client = Client(TWILIO_SID, TWILIO_TOKEN)
+
+##############################################################################
 
 def blackcomb_flare_json():
     """creates json data for d3 map"""
@@ -86,3 +94,4 @@ def whistler_flare_json():
         w_master_dict = {'name': 'Whistler', 'children': lifts_list}
 
     return w_master_dict
+

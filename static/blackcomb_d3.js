@@ -100,12 +100,9 @@ function update(source,leftSide ) {
       .attr("dy", ".65em")
       .attr("text-anchor", api.textAnchor)
       .html(function(d) { 
-              if (d._children) {
-                return d.name; 
-              }else {
                 let run = d.name
                 console.log(run)
-                return "<a href=/" + encodeURIComponent(run) + ">" + run + "</a>"}})
+                return "<a href=/" + encodeURIComponent(run) + ">" + run + "</a>"})
       .style("fill-opacity", 1e-6);
 
   // Transition nodes to their new position.
