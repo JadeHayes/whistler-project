@@ -18,7 +18,7 @@ from twilio.rest import Client
 YELP_API_KEY= os.environ.get("YELP_API_KEY")
 TWILIO_SID = os.environ.get("TWILIO_SID")
 TWILIO_TOKEN = os.environ.get("TWILIO_TOKEN")
-client = Client(TWILIO_SID, TWILIO_TOKEN)
+tclient = Client(TWILIO_SID, TWILIO_TOKEN)
 
 API_HOST = 'https://api.yelp.com'
 SEARCH_PATH = '/v3/businesses/search'
@@ -65,7 +65,7 @@ def check_login():
             return redirect("/home")
         else:
             flash("Login failed")
-            return redirect("/log-in")
+            return redirect("/")
     else:
         flash("Hello there new friend, please register here")
         return redirect("/register")
@@ -184,7 +184,7 @@ def twilio_texts():
             blackcomb.append(run_obj.name)
 
     # text client a list of fave skiruns & lifts
-    message = client.messages.create(to="+16504555405",
+    message = tclient.messages.create(to="+16504555405",
                                      from_="+14158499644",
                                      body="Whistler: {}, Blackcomb: {}".format(
                                      whistler,

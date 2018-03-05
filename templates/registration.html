@@ -36,7 +36,7 @@ $(document).ready(function () {
     <div class="row">
         <div class="col-md-offset-5 col-md-3">
             <form action='/register' method='POST'>
-                <div class="form-login signin">
+                <div class="form-login signin register">
                     <h4>Register.</h4>
                         <input type='text' name='fname' class="form-control input-sm chat-input" placeholder="First name"required/></br>
 
@@ -46,12 +46,32 @@ $(document).ready(function () {
 
                         <input type="password" name="password" class="form-control input-sm chat-input" placeholder="password" required/></br>
 
+               <p> <b> Which level skier/rider are you? </b></p>
+                <input type="radio" id="green" name="level" value="1" required>
+                    <label for="green">Novice</label>
+                <input type="radio" id="blue" name="level" value="2" required>
+                    <label for="blue">Moderate</label>
+                <input type="radio" id="black" name="level" value="3" required>
+                    <label for="black">Advanced</label>
 
-                <div class="wrapper">
-                <span class="group-btn">     
-                <button type='submit' class="btn btn-danger">Register</button>
+            <b> Where do you like to ride most? </b>
+            <div class="checkgroup">
+                <input id="groomers" type="checkbox" name="category" value="2" class='data-grouprequired'>    
+                    <label for="groomers">Trails</label>
+                <input id="trees" type="checkbox" name="category" value="1">
+                    <label for="trees">Trees</label>
+                <input id="bowls" type="checkbox" name="category" value="4"> 
+                    <label for="bowls">Bowls</label>
+                <input id="park" type="checkbox" name="category" value="3"> 
+                    <label for="park">Park</label> <br>
+            </div>
+
+
+                <div class="wrapper" align="right">
+                <span class="group-btn ">     
+                </br><button type='submit' class="btn btn-danger">Register</button>
                 </span>
-                <div id='register'>
+                <div id='register' align="left">
                     <b>Already registered?</b>
                     <a href="/"> login </a>
                 </div>   
@@ -59,6 +79,7 @@ $(document).ready(function () {
             </div>
         </div>
     </div>
+</div>
 </div>
 </div>
 </div>
