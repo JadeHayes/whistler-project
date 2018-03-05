@@ -43,10 +43,9 @@
       
     </div>
   </div>
-
-
+<section class="homepage">
 <!-- Mountain Conditions Update -->
-<div class="container updates col-xs-6">
+<div class="container updates col-xs-6 mtn-rept">
   <div style='text-align:center'>
     <span>
       <h2> Whistler MTN </h2>
@@ -55,7 +54,7 @@
     </span>
             <h4>A quick MTN report</h4>
                 <div id='ride_choice'>
-                    <p> Best spot to ride for todays conditions:
+  <p> Best spot to ride for todays conditions:
                      {{ daily_cat }} </p>
                 </div>
             <b> Daily Snowfall Accumulation: </b> {{ weather.daily_snowfall }}" </br>
@@ -77,7 +76,7 @@
 
     <div>
         <h4>Groomers Choice:</h4>
-            {% for groomer in groomed_runs %} <br>
+            {% for groomer in groomed_runs %}
                 {{ groomer.name }} | {{ groomer.level}}
             {% endfor %}
     </div> <br>
@@ -90,7 +89,7 @@
 </div>
 
 
-<!-- faves Modal -->
+<!-- livecam Modal -->
 <!-- Modal -->
   <div class="modal fade" id="modal-liveCam" role="dialog">
     <div class="modal-dialog">
@@ -118,17 +117,18 @@
 
 
 <!-- Twitter Widget -->
-<div class="inline-block col-xs-6 twitter-widget-holder">
+<div class="inline-block col-xs-4 twitter-widget-holder">
 
-  <a class="twitter-timeline twitter-widget-holder"
-  href="https://twitter.com/WhistlerBlckcmb" height="600" data-chrome="nofooter noborders"></a>
+  <a class="twitter-timeline twitter-widget-holder col-xs-4"
+  href="https://twitter.com/WhistlerBlckcmb" height="500" data-chrome="nofooter noborders"></a>
   Tweets from Whistler Blackcomb
 
   <a class="twitter-list twitter-widget-holder" href="https://twitter.com/WhistlerBlckcmb"></a> 
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
   </a>
 </div>
-
+<div class="col-xs-1"></div>
+</section>
 <script type="text/javascript">
 twttr.widgets.createTimeline(
   {
