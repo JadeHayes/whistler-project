@@ -14,29 +14,36 @@
     background-color: #F0F8FF;
 }
 
+hr {clear: both;}
+
+#puppies{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    border-top: 1px solid #eee;
+    height: 320px;
+    margin-bottom: 25px;
+}
+
+#runs{
+    padding-top: 30px;
+}
+
+
 </style>
 
 <h2> {{lift.name}} </h2>
- <div style="text-align:center">
-    <img class="open container-fluid" src="https://s-media-cache-ak0.pinimg.com/originals/5f/23/d4/5f23d47df4ee88438ef9b5e7f2701481.jpg"/>
-</div>
 
-<html lang="en">
-<head>
-  <title>Bootstrap Modal</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
-<body>
+
+    <img id="puppies" class= "col-xs-12" src="static/photo/puppies.png"/ >
+
 
 <div class="container">
 {% if yelp_infos %}
-  <h2>Restaurants</h2>
+  <p><h2>Restaurants</h2></p>
 
   <!-- Trigger the modal with a button -->
+<body>
     {% for food in yelp_infos %}
   <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-{{food.food_id}}">{{food.name}}
      </button>
@@ -80,8 +87,8 @@
 </html>
 
 
-
-<b>Skiruns</b> </br>
+<div id="runs">
+<h3>Skiruns</h3> </br>
 {% if green %}
 <div class='green col-xs-4 inline container'>
   <b>Beginner level skiruns</b></br>
@@ -110,8 +117,8 @@
   {% endfor %}
 </div>
 {% endif %}
-
-
+</div>
+  <img class="mtn-footer" src="https://www.whistlerblackcomb.com/Assets/images/sites/whistlerblackcomb/footer-mountains-top.svg">
 <script type="text/javascript">
 function dbAddFave(evt){
 

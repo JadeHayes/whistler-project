@@ -126,6 +126,7 @@ class Category(db.Model):
     # Lets SQL alchemy know which columns to add
     category_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     cat = db.Column(db.String(150))
+    icon = db.Column(db.String(150))
 
     # Defining the relationship between the skirun class and the category table
     skiruns = db.relationship("Skirun")

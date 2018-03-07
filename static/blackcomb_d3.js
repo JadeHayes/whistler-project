@@ -3,7 +3,7 @@
 (function(){
 var margin = {top: 20, right: 120, bottom: 20, left: 120},
     width = (960 - margin.left)/2,
-    height = 800 - margin.top - margin.bottom;
+    height = 600 - margin.top - margin.bottom;
 
 function adjustx(x){
   // console.log(width,x);
@@ -25,7 +25,7 @@ var tree = d3.layout.tree()
 var diagonal = d3.svg.diagonal()
     .projection(function(d) { return [d.y, d.x]; });
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select("#d3map").append("svg")
     .attr("width", width + margin.right + margin.left)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")

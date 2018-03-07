@@ -48,9 +48,10 @@ class SkirunPage extends React.Component {
     
     return (
       <div>
-        <img src="https://cdn1.snowpak.com/resorts/banners/000/000/026/large/26_british-columbia_whistler-blackcomb.jpg?1517793603" className='col-xs-12' />
-        { form }
+        <div className='col-xs-12'>
         <RatingChart ratings= {this.state.ratings} />
+        { form }
+        </div>
       </div>);
   }
 }

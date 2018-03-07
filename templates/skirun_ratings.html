@@ -10,52 +10,48 @@ table {
   height: auto;
   max-width: 60%;
 }
-img {
+#top {
   display-block;
-  width: auto;
-  height: auto;
-  max-width: 100%;
+  width: 100%;
+  height: 250px;
   vertical-align: middle;
   border: 0;
+  padding: 15px;
   -ms-interpolation-mode: bicubic;
   }
+
+#title{
+  padding: 30px;
+}
 </style>
-<script src="script.js"></script>
+<div class='title'>
 <h2> {{ skirun.name }} </h2>
-
-<html>
-
-<head>
-  <meta charset="UTF-8">
-  <title></title>
-  <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
-</head>
-
-<body>
-
-</body>
-
-</html>
-<div display="run-info inline-block">
-   {% if skirun.status %}
-      Freshly Groomed Today
-   {% endif %} <br>
-      Level: {{ skirun.level }}<br>
 </div>
-<div display="inline-block">
+<row>
+<div class='col-xs-6'>
+  <br>
+   {% if skirun.status %}
+   <b>Daily Skirun Report:</b><br>
+      Freshly Groomed Today
+   {% endif %} | 
+      Level: {{ skirun.level }} 
   {% if skirun.lifts %}
-  Mountain: {{ skirun.lifts[0].mountain }} <br>
+  Mountain: {{ skirun.lifts[0].mountain }} | 
   Type: {{ skirun.category.cat }}
-<h5> Lift Access: </h5>
+</div>
+
+<div class='col-xs-6'>
+  <h5> Lift Access: </h5>
   {% for lift in skirun.lifts %}
   <a href="{{ lift.name }}">{{ lift.name }}</a><br>
-
-
   {% endfor %}
   {% endif %}
 </div>
+<row>
+<img id='top' src='static/photo/skiruns.png' className='col-xs-12' />
 
 <div id="root"> <!-- component will go in this div --> </div>
+
 
 
 
