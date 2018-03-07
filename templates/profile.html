@@ -1,6 +1,31 @@
 {% extends 'base.html' %}
 {% block content %} 
-<h2 id='greeting'> Welcome Back {{ user.fname.title() }} {{ user.lname.title() }}!</h2>
+
+<style type="text/css">
+body {
+  text-align: center;
+}
+
+.greeting{
+  text-align: left;
+}
+
+#faves-button{
+  margin-top: 15px;
+}
+
+.row {
+    margin-right: -15px;
+    margin-left: -15px;
+    margin-top: -15px;
+}
+
+.categories {
+  margin-top: -45px;
+}
+</style>
+
+<h2 class='greeting'> Welcome Back {{ user.fname.title() }} {{ user.lname.title() }}!</h2>
 
 <link rel="import" href="twilio_modal.html">
 <!-- Modal -->
@@ -59,9 +84,11 @@
 $('#text-it').on('click', textIt;
 </script>
 
-<h4>Your personal ride report </h4>
+<h4 class="greeting">Your personal ride report<br>
+    <button type="button" class="btn btn-danger text-left" data-toggle="modal" data-target="#modal-liveCam" id="faves-button">Text Faves</button>
 
-<div class="row">
+</h4>
+<div class="row categories">
   <hr>
 {% for cats in cat_obj%}
 <div class='col-xs-4 mtn-rept'>
@@ -79,9 +106,7 @@ $('#text-it').on('click', textIt;
 </div>
 <hr>
 
-  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-liveCam">Text Faves</button>
 <div class="row">
-<div class='faves'>
   <div class="col-xs-3 faves inline-block">
 
             <h3>Whistler:</h3>
@@ -102,10 +127,9 @@ $('#text-it').on('click', textIt;
               {% endfor %}
             {% endfor %}
           </div>
-</div>
     {% if ratings %}
+<div id='user_ratings' class='col-xs-6 rating-table textleft'>
     <h3>My Ratings:</h3>
-<div id='user_ratings' class='col-xs-6 rating-table'>
   <a href="/lifts">Find & rate a ski run</a> </br>
 <table class='table table-striped'>
   <tr>

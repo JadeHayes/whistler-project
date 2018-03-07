@@ -19,7 +19,7 @@
        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
-
+<div class="row">
 <!-- Modal -->
   <div class="modal fade" id="modal-liveCam" role="dialog">
     <div class="modal-dialog">
@@ -40,19 +40,19 @@
       
     </div>
   </div>
-
+<div class="col-xs-1"></div>
 <!-- Mountain Conditions Update -->
-<div class="container updates col-xs-6 mtn-rept">
+<div class="container updates col-xs-5 mtn-rept">
   <div style='text-align:center'>
     <span>
       <h2> Whistler MTN </h2>
       <hr>
       <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-liveCam">LiveCam</button><br>
     </span>
-            <h4>A quick MTN report</h4>
+            <h3>A quick MTN report</h3>
                 <div id='ride_choice'>
-  <p> Best spot to ride for todays conditions:
-                     {{ daily_cat }} </p>
+  <h5> Best spot to ride for todays conditions:
+                     {{ daily_cat }} </h5>
                 </div>
             <b> Daily Snowfall Accumulation: </b> {{ weather.daily_snowfall }}" </br>
             <b> 24 hour snowfall: </b> {{ weather.overnight_snowfall }} " </br>
@@ -85,6 +85,8 @@
   </div>   
 </div>
 
+<div class="col-xs-1"></div>
+
 
 <!-- livecam Modal -->
 <!-- Modal -->
@@ -114,7 +116,7 @@
 
 
 <!-- Twitter Widget -->
-<div class="inline-block col-xs-6 twitter-widget-holder">
+<div class="inline-block col-xs-5 twitter-widget-holder">
 
   <a class="twitter-timeline twitter-widget-holder col-xs-4"
   href="https://twitter.com/WhistlerBlckcmb" height="500" data-chrome="nofooter noborders"></a>
@@ -124,7 +126,7 @@
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
   </a>
 </div>
-<div class="col-xs-1"></div>
+</div>
 </div>
 <script type="text/javascript">
 twttr.widgets.createTimeline(

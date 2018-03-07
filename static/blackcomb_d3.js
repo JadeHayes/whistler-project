@@ -3,7 +3,7 @@
 (function(){
 var margin = {top: 20, right: 120, bottom: 20, left: 120},
     width = (960 - margin.left)/2,
-    height = 600 - margin.top - margin.bottom;
+    height = 650 - margin.top - margin.bottom;
 
 function adjustx(x){
   // console.log(width,x);
