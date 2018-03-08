@@ -21,3 +21,5 @@ SQLAlchemy==1.1.7
 
 * Hackright Academy for women software engineers
 
+![Alt Text](https://media.giphy.com/media/AF2KMPPRDfL0PfD1Dw/giphy.gif)
+
