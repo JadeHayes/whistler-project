@@ -39,7 +39,8 @@ SET default_with_oids = false;
 
 CREATE TABLE categories (
     category_id integer NOT NULL,
-    cat character varying(150)
+    cat character varying(150),
+    icon character varying(150)
 );
 
 
@@ -542,11 +543,11 @@ ALTER TABLE ONLY weather ALTER COLUMN weather_id SET DEFAULT nextval('weather_we
 -- Data for Name: categories; Type: TABLE DATA; Schema: public; Owner: vagrant
 --
 
-COPY categories (category_id, cat) FROM stdin;
-1	tree
-2	groomer
-3	park
-4	bowl
+COPY categories (category_id, cat, icon) FROM stdin;
+1	tree  static/photo/trees.png
+2	groomer   static/photo/groomer.png
+3	park  static/photo/park.png
+4	bowl  static/photo/bowls.png
 \.
 
 

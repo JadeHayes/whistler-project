@@ -6,15 +6,8 @@ from flask_debugtoolbar import DebugToolbarExtension
 
 from model import connect_to_db, db, Category, Weather, Lift, Skirun, User, Rating, SkillLevel, CatUser
 from random import sample
-from twilio.rest import Client
 import json
 import os
-
-##############################################################################
-
-TWILIO_SID = os.environ.get("TWILIO_SID")
-TWILIO_TOKEN = os.environ.get("TWILIO_TOKEN")
-client = Client(TWILIO_SID, TWILIO_TOKEN)
 
 ##############################################################################
 

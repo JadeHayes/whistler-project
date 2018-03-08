@@ -55,7 +55,7 @@ def check_login():
     password = request.form.get('password')
 
     # Make a query to see if the users email and password are in the db
-    user = User.query.filter_by(email=email, password=password).first()
+    user = User.query.filter_by(email=email).first()
 
     # If they are in the db, add them to a session and redirect home
     if user:
@@ -396,8 +396,6 @@ def get_lift_info():
 
     # restaurants = Food.query.join(FoodLift).join(Lift).filter(Lift.lift_id == lift_id).all()
     restaurants = [food.to_dict() for food in lift.foods]
-
-    # import pdb; pdb.set_trace()
 
     if restaurants:
         return jsonify(restaurants)
